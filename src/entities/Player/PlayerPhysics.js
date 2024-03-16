@@ -32,7 +32,7 @@ export default class PlayerPhysics extends Component{
         const bodyInfo = new Ammo.btRigidBodyConstructionInfo(mass, motionState, shape, localInertia);
         this.body = new Ammo.btRigidBody(bodyInfo);
         this.body.setFriction(0);
-        
+
         //this.body.setCollisionFlags(this.body.getCollisionFlags() | CF_KINEMATIC_OBJECT);
         this.body.setActivationState(DISABLE_DEACTIVATION);
 

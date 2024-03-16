@@ -1,10 +1,10 @@
 /**
  * entry.js
- * 
- * This is the first file loaded. It sets up the Renderer, 
- * Scene, Physics and Entities. It also starts the render loop and 
+ *
+ * This is the first file loaded. It sets up the Renderer,
+ * Scene, Physics and Entities. It also starts the render loop and
  * handles window resizes.
- * 
+ *
  */
 
 import * as THREE from 'three'
@@ -20,21 +20,13 @@ import {  FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import {  GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import {  OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
 import {  SkeletonUtils } from 'three/examples/jsm/utils/SkeletonUtils'
-import NpcCharacterController from './entities/NPC/CharacterController'
 import Input from './Input'
 
 import level from './assets/level.glb'
-import navmesh from './assets/navmesh.obj'
-
-import mutant from './assets/animations/mutant.fbx'
-import idleAnim from './assets/animations/mutant breathing idle.fbx'
-import attackAnim from './assets/animations/Mutant Punch.fbx'
-import walkAnim from './assets/animations/mutant walking.fbx'
-import runAnim from './assets/animations/mutant run.fbx'
-import dieAnim from './assets/animations/mutant dying.fbx'
 
 //AK47 Model and textures
-import ak47 from './assets/guns/ak47/ak47.glb'
+// import ak47 from './assets/guns/ak47/ak47.glb'
+import ak47 from './assets/guns/hands/just hands.glb'
 import muzzleFlash from './assets/muzzle_flash.glb'
 //Shot sound
 import ak47Shot from './assets/sounds/ak47_shot.wav'
@@ -56,10 +48,6 @@ import decalAlpha from './assets/decals/decal_a.jpg'
 import skyTex from './assets/sky.jpg'
 
 import DebugDrawer from './DebugDrawer'
-import Navmesh from './entities/Level/Navmesh'
-import AttackTrigger from './entities/NPC/AttackTrigger'
-import DirectionDebug from './entities/NPC/DirectionDebug'
-import CharacterCollision from './entities/NPC/CharacterCollision'
 import Weapon from './entities/Player/Weapon'
 import UIManager from './entities/UI/UIManager'
 import AmmoBox from './entities/AmmoBox/AmmoBox'
@@ -129,16 +117,11 @@ class FPSGameApp{
     //this.debugDrawer.enable();
   }
 
-  SetAnim(name, obj){
-    const clip = obj.animations[0];
-    this.mutantAnims[name] = clip;
-  }
-
   PromiseProgress(proms, progress_cb){
     let d = 0;
     progress_cb(0);
     for (const p of proms) {
-      p.then(()=> {    
+      p.then(()=> {
         d++;
         progress_cb( (d / proms.length) * 100 );
       });
@@ -179,14 +162,6 @@ class FPSGameApp{
 
     //Level
     promises.push(this.AddAsset(level, gltfLoader, "level"));
-    promises.push(this.AddAsset(navmesh, objLoader, "navmesh"));
-    //Mutant
-    promises.push(this.AddAsset(mutant, fbxLoader, "mutant"));
-    promises.push(this.AddAsset(idleAnim, fbxLoader, "idleAnim"));
-    promises.push(this.AddAsset(walkAnim, fbxLoader, "walkAnim"));
-    promises.push(this.AddAsset(runAnim, fbxLoader, "runAnim"));
-    promises.push(this.AddAsset(attackAnim, fbxLoader, "attackAnim"));
-    promises.push(this.AddAsset(dieAnim, fbxLoader, "dieAnim"));
     //AK47
     promises.push(this.AddAsset(ak47, gltfLoader, "ak47"));
     promises.push(this.AddAsset(muzzleFlash, gltfLoader, "muzzleFlash"));
@@ -210,22 +185,14 @@ class FPSGameApp{
     this.assets['level'] = this.assets['level'].scene;
     this.assets['muzzleFlash'] = this.assets['muzzleFlash'].scene;
 
-    //Extract mutant anims
-    this.mutantAnims = {};
-    this.SetAnim('idle', this.assets['idleAnim']);
-    this.SetAnim('walk', this.assets['walkAnim']);
-    this.SetAnim('run', this.assets['runAnim']);
-    this.SetAnim('attack', this.assets['attackAnim']);
-    this.SetAnim('die', this.assets['dieAnim']);
-
     this.assets['ak47'].scene.animations = this.assets['ak47'].animations;
-    
+
     //Set ammo box textures and other props
     this.assets['ammobox'].scale.set(0.01, 0.01, 0.01);
     this.assets['ammobox'].traverse(child =>{
       child.castShadow = true;
       child.receiveShadow = true;
-      
+
       child.material = new THREE.MeshStandardMaterial({
         map: this.assets['ammoboxTexD'],
         aoMap: this.assets['ammoboxTexAO'],
@@ -235,7 +202,7 @@ class FPSGameApp{
         roughnessMap: this.assets['ammoboxTexR'],
         color: new THREE.Color(0.4, 0.4, 0.4)
       });
-      
+
     });
 
     this.assets['ammoboxShape'] = createConvexHullShape(this.assets['ammobox']);
@@ -250,7 +217,6 @@ class FPSGameApp{
     const levelEntity = new Entity();
     levelEntity.SetName('Level');
     levelEntity.AddComponent(new LevelSetup(this.assets['level'], this.scene, this.physicsWorld));
-    levelEntity.AddComponent(new Navmesh(this.scene, this.assets['navmesh']));
     levelEntity.AddComponent(new LevelBulletDecals(this.scene, this.assets['decalColor'], this.assets['decalNormal'], this.assets['decalAlpha']));
     this.entityManager.Add(levelEntity);
 
@@ -268,21 +234,6 @@ class FPSGameApp{
     playerEntity.SetPosition(new THREE.Vector3(2.14, 1.48, -1.36));
     playerEntity.SetRotation(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0), -Math.PI * 0.5));
     this.entityManager.Add(playerEntity);
-
-    const npcLocations = [
-      [10.8, 0.0, 22.0],
-    ];
-
-    npcLocations.forEach((v,i)=>{
-      const npcEntity = new Entity();
-      npcEntity.SetPosition(new THREE.Vector3(v[0], v[1], v[2]));
-      npcEntity.SetName(`Mutant${i}`);
-      npcEntity.AddComponent(new NpcCharacterController(SkeletonUtils.clone(this.assets['mutant']), this.mutantAnims, this.scene, this.physicsWorld));
-      npcEntity.AddComponent(new AttackTrigger(this.physicsWorld));
-      npcEntity.AddComponent(new CharacterCollision(this.physicsWorld));
-      npcEntity.AddComponent(new DirectionDebug(this.scene));
-      this.entityManager.Add(npcEntity);
-    });
 
     const uimanagerEntity = new Entity();
     uimanagerEntity.SetName("UIManager");
@@ -320,7 +271,7 @@ class FPSGameApp{
   }
 
   // resize
-  WindowResizeHanlder = () => { 
+  WindowResizeHanlder = () => {
     const { innerHeight, innerWidth } = window;
     this.renderer.setSize(innerWidth, innerHeight);
     this.camera.aspect = innerWidth / innerHeight;
