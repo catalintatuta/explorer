@@ -39,8 +39,8 @@ export default class Weapon extends Component{
 
     SetAnimations(){
         this.mixer = new THREE.AnimationMixer( this.model );
-        this.SetAnim('idle', this.model.animations[1]);
-        this.SetAnim('reload', this.model.animations[2]);
+        // this.SetAnim('idle', this.model.animations[0]);
+        // this.SetAnim('reload', this.model.animations[0]);
         this.SetAnim('shoot', this.model.animations[0]);
     }
 
@@ -55,7 +55,7 @@ export default class Weapon extends Component{
 
     SetSoundEffect(){
         this.shotSound = new THREE.Audio(this.audioListner);
-        this.shotSound.setBuffer(this.shotSoundBuffer);
+        // this.shotSound.setBuffer(this.shotSoundBuffer);
         this.shotSound.setLoop(false);
     }
 
@@ -129,7 +129,7 @@ export default class Weapon extends Component{
         }
 
         this.reloading = true;
-        this.stateMachine.SetState('reload');
+        // this.stateMachine.SetState('reload');
     }
 
     ReloadDone(){
@@ -147,12 +147,12 @@ export default class Weapon extends Component{
         end.unproject(this.camera);
 
         const collisionMask = CollisionFilterGroups.AllFilter & ~CollisionFilterGroups.SensorTrigger;
-        
+
         if(AmmoHelper.CastRay(this.world, start, end, this.hitResult, collisionMask)){
             const ghostBody = Ammo.castObject( this.hitResult.collisionObject, Ammo.btPairCachingGhostObject );
-            const rigidBody = Ammo.castObject( this.hitResult.collisionObject, Ammo.btRigidBody ); 
+            const rigidBody = Ammo.castObject( this.hitResult.collisionObject, Ammo.btRigidBody );
             const entity = ghostBody.parentEntity || rigidBody.parentEntity;
-            
+
             entity && entity.Broadcast({'topic': 'hit', from: this.parent, amount: this.damage, hitResult: this.hitResult});
         }
     }
@@ -180,7 +180,7 @@ export default class Weapon extends Component{
 
             this.Raycast();
             this.Broadcast({topic: 'ak47_shot'});
-            
+
             this.shotSound.isPlaying && this.shotSound.stop();
             this.shotSound.play();
         }

@@ -11,7 +11,7 @@ export default class WeaponFSM extends FiniteStateMachine{
     Init(){
         this.AddState('idle', new IdleState(this));
         this.AddState('shoot', new ShootState(this));
-        this.AddState('reload', new ReloadState(this));
+        // this.AddState('reload', new ReloadState(this));
     }
 }
 
@@ -21,19 +21,19 @@ class IdleState extends State{
     }
 
     get Name(){return 'idle'}
-    get Animation(){return this.parent.proxy.animations['idle']; }
+    get Animation(){return null; }
 
     Enter(prevState){
-        const action = this.Animation.action;
-
-        if(prevState){
-            action.time = 0.0;
-            action.enabled = true;
-            action.setEffectiveTimeScale(1.0);
-            action.crossFadeFrom(prevState.Animation.action, 0.1, true);
-        }
-
-        action.play();
+        // const action = this.Animation.action;
+        //
+        // if(prevState){
+        //     action.time = 0.0;
+        //     action.enabled = true;
+        //     action.setEffectiveTimeScale(1.0);
+        //     action.crossFadeFrom(prevState.Animation.action, 0.1, true);
+        // }
+        //
+        // action.play();
     }
 
     Update(t){
@@ -53,15 +53,16 @@ class ShootState extends State{
 
     Enter(prevState){
         const action = this.Animation.action;
+        action.loop = THREE.LoopOnce;
 
         if(prevState){
             action.time = 0.0;
             action.enabled = true;
-            action.setEffectiveTimeScale(1.0);
-            action.crossFadeFrom(prevState.Animation.action, 0.1, true);
+            // action.setEffectiveTimeScale(1.0);
+            // action.crossFadeFrom(prevState.Animation.action, 0.1, true);
         }
 
-        action.timeScale = 3.0;
+        action.timeScale = 2.0;
         action.play();
     }
 

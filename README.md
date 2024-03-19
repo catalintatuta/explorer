@@ -42,9 +42,10 @@ Running `npm run build` in terminal will bundle your project into the folder `./
 ## About the models
 Art assets used in this project:
 
+* Rigged Fps Arms by Player11132 [CC-BY](https://creativecommons.org/licenses/by/3.0/) via [Poly Pizza](https://poly.pizza/m/AMGNKfQqVc)
+* Clouds by Poly by Google [CC-BY](https://creativecommons.org/licenses/by/3.0/) via [Poly Pizza](https://poly.pizza/m/5vL346OfNST)
 * Cumulus Clouds 5 by S. Paul Michael [CC-BY](https://creativecommons.org/licenses/by/3.0/) via [Poly Pizza](https://poly.pizza/m/25RmW99gwuv)
 * [Metal Ammo Box](https://skfb.ly/6UAQY) by [TheoClarke](https://sketchfab.com/TheoClarke) is licensed under CC BY 4.0
-* [Mutant](https://mixamo.com) by [mixamo.com](https://mixamo.com)
 * [Veld Fire](https://hdrihaven.com/hdri/?h=veld_fire) by [Greg Zaal](https://hdrihaven.com/hdris/?a=Greg%20Zaal) is licensed under CC0
 
 ## Thanks to

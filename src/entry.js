@@ -18,15 +18,12 @@ import PlayerPhysics from './entities/Player/PlayerPhysics'
 import Stats from 'three/examples/jsm/libs/stats.module'
 import {  FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import {  GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import {  OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
-import {  SkeletonUtils } from 'three/examples/jsm/utils/SkeletonUtils'
 import Input from './Input'
 
-import level from './assets/level.glb'
+import level from './assets/cloud_map_0.glb'
 
-//AK47 Model and textures
-// import ak47 from './assets/guns/ak47/ak47.glb'
-import ak47 from './assets/guns/hands/just hands.glb'
+//Hand Model and textures
+import hand from './assets/hands/short_hand.glb'
 import muzzleFlash from './assets/muzzle_flash.glb'
 //Shot sound
 import ak47Shot from './assets/sounds/ak47_shot.wav'
@@ -51,6 +48,7 @@ import DebugDrawer from './DebugDrawer'
 import Weapon from './entities/Player/Weapon'
 import UIManager from './entities/UI/UIManager'
 import AmmoBox from './entities/AmmoBox/AmmoBox'
+import TestEntity from './entities/TestEntity/TestEntity'
 import LevelBulletDecals from './entities/Level/BulletDecals'
 import PlayerHealth from './entities/Player/PlayerHealth'
 
@@ -155,7 +153,6 @@ class FPSGameApp{
   async LoadAssets(){
     const gltfLoader = new GLTFLoader();
     const fbxLoader = new FBXLoader();
-    const objLoader = new OBJLoader();
     const audioLoader = new THREE.AudioLoader();
     const texLoader = new THREE.TextureLoader();
     const promises = [];
@@ -163,7 +160,7 @@ class FPSGameApp{
     //Level
     promises.push(this.AddAsset(level, gltfLoader, "level"));
     //AK47
-    promises.push(this.AddAsset(ak47, gltfLoader, "ak47"));
+    promises.push(this.AddAsset(hand, gltfLoader, "hand"));
     promises.push(this.AddAsset(muzzleFlash, gltfLoader, "muzzleFlash"));
     promises.push(this.AddAsset(ak47Shot, audioLoader, "ak47Shot"));
     //Ammo box
@@ -185,7 +182,7 @@ class FPSGameApp{
     this.assets['level'] = this.assets['level'].scene;
     this.assets['muzzleFlash'] = this.assets['muzzleFlash'].scene;
 
-    this.assets['ak47'].scene.animations = this.assets['ak47'].animations;
+    this.assets['hand'].scene.animations = this.assets['hand'].animations;
 
     //Set ammo box textures and other props
     this.assets['ammobox'].scale.set(0.01, 0.01, 0.01);
@@ -229,7 +226,7 @@ class FPSGameApp{
     playerEntity.SetName("Player");
     playerEntity.AddComponent(new PlayerPhysics(this.physicsWorld, Ammo));
     playerEntity.AddComponent(new PlayerControls(this.camera, this.scene));
-    playerEntity.AddComponent(new Weapon(this.camera, this.assets['ak47'].scene, this.assets['muzzleFlash'], this.physicsWorld, this.assets['ak47Shot'], this.listener ));
+    playerEntity.AddComponent(new Weapon(this.camera, this.assets['hand'].scene, this.assets['muzzleFlash'], this.physicsWorld, this.assets['ak47Shot'], this.listener ));
     playerEntity.AddComponent(new PlayerHealth());
     playerEntity.SetPosition(new THREE.Vector3(2.14, 1.48, -1.36));
     playerEntity.SetRotation(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0), -Math.PI * 0.5));
@@ -249,6 +246,7 @@ class FPSGameApp{
       const box = new Entity();
       box.SetName(`AmmoBox${i}`);
       box.AddComponent(new AmmoBox(this.scene, this.assets['ammobox'].clone(), this.assets['ammoboxShape'], this.physicsWorld));
+      box.AddComponent(new TestEntity(this.scene, this.assets['hand'].scene.clone(), this.assets['hand'].scene, this.physicsWorld));
       box.SetPosition(new THREE.Vector3(loc[0], loc[1], loc[2]));
       this.entityManager.Add(box);
     });
