@@ -24,16 +24,6 @@ class IdleState extends State{
     get Animation(){return null; }
 
     Enter(prevState){
-        // const action = this.Animation.action;
-        //
-        // if(prevState){
-        //     action.time = 0.0;
-        //     action.enabled = true;
-        //     action.setEffectiveTimeScale(1.0);
-        //     action.crossFadeFrom(prevState.Animation.action, 0.1, true);
-        // }
-        //
-        // action.play();
     }
 
     Update(t){
@@ -49,21 +39,9 @@ class ShootState extends State{
     }
 
     get Name(){return 'shoot'}
-    get Animation(){return this.parent.proxy.animations['shoot']; }
+    get Animation(){return null }
 
     Enter(prevState){
-        const action = this.Animation.action;
-        action.loop = THREE.LoopOnce;
-
-        if(prevState){
-            action.time = 0.0;
-            action.enabled = true;
-            // action.setEffectiveTimeScale(1.0);
-            // action.crossFadeFrom(prevState.Animation.action, 0.1, true);
-        }
-
-        action.timeScale = 2.0;
-        action.play();
     }
 
     Update(t){

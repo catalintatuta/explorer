@@ -20,13 +20,10 @@ import {  FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import {  GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import Input from './Input'
 
-import level from './assets/cloud_map_0.glb'
+import level from './assets/cloud_map_2.glb'
 
-//Hand Model and textures
-import hand from './assets/hands/short_hand.glb'
-import muzzleFlash from './assets/muzzle_flash.glb'
 //Shot sound
-import ak47Shot from './assets/sounds/ak47_shot.wav'
+// import ak47Shot from './assets/sounds/ak47_shot.wav'
 
 //Ammo box
 import ammobox from './assets/ammo/AmmoBox.fbx'
@@ -42,7 +39,7 @@ import decalNormal from './assets/decals/decal_n.jpg'
 import decalAlpha from './assets/decals/decal_a.jpg'
 
 //Sky
-import skyTex from './assets/sky.jpg'
+import skyTex from './assets/matrix.jpg'
 
 import DebugDrawer from './DebugDrawer'
 import Weapon from './entities/Player/Weapon'
@@ -153,16 +150,14 @@ class FPSGameApp{
   async LoadAssets(){
     const gltfLoader = new GLTFLoader();
     const fbxLoader = new FBXLoader();
-    const audioLoader = new THREE.AudioLoader();
+    // const audioLoader = new THREE.AudioLoader();
     const texLoader = new THREE.TextureLoader();
     const promises = [];
 
     //Level
     promises.push(this.AddAsset(level, gltfLoader, "level"));
-    //AK47
-    promises.push(this.AddAsset(hand, gltfLoader, "hand"));
-    promises.push(this.AddAsset(muzzleFlash, gltfLoader, "muzzleFlash"));
-    promises.push(this.AddAsset(ak47Shot, audioLoader, "ak47Shot"));
+    //Player
+    // promises.push(this.AddAsset(ak47Shot, audioLoader, "ak47Shot"));
     //Ammo box
     promises.push(this.AddAsset(ammobox, fbxLoader, "ammobox"));
     promises.push(this.AddAsset(ammoboxTexD, texLoader, "ammoboxTexD"));
@@ -180,9 +175,6 @@ class FPSGameApp{
     await this.PromiseProgress(promises, this.OnProgress);
 
     this.assets['level'] = this.assets['level'].scene;
-    this.assets['muzzleFlash'] = this.assets['muzzleFlash'].scene;
-
-    this.assets['hand'].scene.animations = this.assets['hand'].animations;
 
     //Set ammo box textures and other props
     this.assets['ammobox'].scale.set(0.01, 0.01, 0.01);
@@ -226,7 +218,9 @@ class FPSGameApp{
     playerEntity.SetName("Player");
     playerEntity.AddComponent(new PlayerPhysics(this.physicsWorld, Ammo));
     playerEntity.AddComponent(new PlayerControls(this.camera, this.scene));
-    playerEntity.AddComponent(new Weapon(this.camera, this.assets['hand'].scene, this.assets['muzzleFlash'], this.physicsWorld, this.assets['ak47Shot'], this.listener ));
+    playerEntity.AddComponent(new Weapon(this.camera, this.physicsWorld,
+      // this.assets['ak47Shot'], this.listener
+    ));
     playerEntity.AddComponent(new PlayerHealth());
     playerEntity.SetPosition(new THREE.Vector3(2.14, 1.48, -1.36));
     playerEntity.SetRotation(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0), -Math.PI * 0.5));
@@ -238,15 +232,34 @@ class FPSGameApp{
     this.entityManager.Add(uimanagerEntity);
 
     const ammoLocations = [
-       [14.37, 0.0, 10.45],
-       [32.77, 0.0, 33.84],
+       [16, 0.0, -4],
+       [32, 0.0, 2],
+       [27, 0.0, 30],
+       [2.5, 0.0, 13],
+       [-42, 0.0, 11.5],
+       [-36, 0.0, 28],
+       [-30, 0.0, -7.6],
+       [-48, 0.0, -14],
+       [-40, 0.0, -35],
+       [-27, 0.0, -46.5],
+       [-7, 0.0, -40],
+       [12, 0.0, -47.6],
+       [45, 0.0, -10],
+       [45.7, 0.0, -27.5],
+       [68, 0.0, -28.5],
+       [51, 0.0, -44],
+       [76, 0.0, -3],
+       [81.5, 0.0, 8],
+       [83, 0.0, 42],
+       [50, 0.0, 26],
     ];
 
     ammoLocations.forEach((loc, i) => {
       const box = new Entity();
       box.SetName(`AmmoBox${i}`);
       box.AddComponent(new AmmoBox(this.scene, this.assets['ammobox'].clone(), this.assets['ammoboxShape'], this.physicsWorld));
-      box.AddComponent(new TestEntity(this.scene, this.assets['hand'].scene.clone(), this.assets['hand'].scene, this.physicsWorld));
+
+      // box.AddComponent(new TestEntity(this.scene, this.assets['hand'].scene.clone(), this.assets['hand'].scene, this.physicsWorld));
       box.SetPosition(new THREE.Vector3(loc[0], loc[1], loc[2]));
       this.entityManager.Add(box);
     });
