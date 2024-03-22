@@ -25,6 +25,9 @@ import level from './assets/cloud_map_2.glb'
 //Shot sound
 // import ak47Shot from './assets/sounds/ak47_shot.wav'
 
+//Items
+import item_1 from './assets/items/id.glb';
+
 //Ammo box
 import ammobox from './assets/ammo/AmmoBox.fbx'
 import ammoboxTexD from './assets/ammo/AmmoBox_D.tga.png'
@@ -45,9 +48,10 @@ import DebugDrawer from './DebugDrawer'
 import Weapon from './entities/Player/Weapon'
 import UIManager from './entities/UI/UIManager'
 import AmmoBox from './entities/AmmoBox/AmmoBox'
-import TestEntity from './entities/TestEntity/TestEntity'
+import PickUpTrigger from './entities/Item/PickUpTrigger'
 import LevelBulletDecals from './entities/Level/BulletDecals'
 import PlayerHealth from './entities/Player/PlayerHealth'
+import ItemSetup from "./entities/Item/ItemSetup";
 
 class FPSGameApp{
 
@@ -72,8 +76,8 @@ class FPSGameApp{
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     this.renderer.toneMapping = THREE.ReinhardToneMapping;
-		this.renderer.toneMappingExposure = 1;
-		this.renderer.outputEncoding = THREE.sRGBEncoding;
+    this.renderer.toneMappingExposure = 1;
+    this.renderer.outputEncoding = THREE.sRGBEncoding;
 
     this.camera = new THREE.PerspectiveCamera();
     this.camera.near = 0.01;
@@ -171,10 +175,13 @@ class FPSGameApp{
     promises.push(this.AddAsset(decalAlpha, texLoader, "decalAlpha"));
 
     promises.push(this.AddAsset(skyTex, texLoader, "skyTex"));
+    // Items
+    promises.push(this.AddAsset(item_1, gltfLoader, "item_1"))
 
     await this.PromiseProgress(promises, this.OnProgress);
 
     this.assets['level'] = this.assets['level'].scene;
+    this.assets['item_1'] = this.assets['item_1'].scene;
 
     //Set ammo box textures and other props
     this.assets['ammobox'].scale.set(0.01, 0.01, 0.01);
@@ -209,6 +216,15 @@ class FPSGameApp{
     levelEntity.AddComponent(new LevelBulletDecals(this.scene, this.assets['decalColor'], this.assets['decalNormal'], this.assets['decalAlpha']));
     this.entityManager.Add(levelEntity);
 
+    const itemEntity = new Entity();
+    itemEntity.SetName('item_1');
+    itemEntity.AddComponent(new ItemSetup(this.assets['item_1'], this.scene, this.physicsWorld));
+    itemEntity.AddComponent(new PickUpTrigger(this.physicsWorld));
+    // not sure this does anything:
+    // levelEntity.AddComponent(new LevelBulletDecals(this.scene, this.assets['decalColor'], this.assets['decalNormal'], this.assets['decalAlpha']));
+    itemEntity.SetPosition(new THREE.Vector3(16, 0.0, -4));
+    this.entityManager.Add(itemEntity);
+
     const skyEntity = new Entity();
     skyEntity.SetName("Sky");
     skyEntity.AddComponent(new Sky(this.scene, this.assets['skyTex']));
@@ -232,26 +248,26 @@ class FPSGameApp{
     this.entityManager.Add(uimanagerEntity);
 
     const ammoLocations = [
-       [16, 0.0, -4],
-       [32, 0.0, 2],
-       [27, 0.0, 30],
-       [2.5, 0.0, 13],
-       [-42, 0.0, 11.5],
-       [-36, 0.0, 28],
-       [-30, 0.0, -7.6],
-       [-48, 0.0, -14],
-       [-40, 0.0, -35],
-       [-27, 0.0, -46.5],
-       [-7, 0.0, -40],
-       [12, 0.0, -47.6],
-       [45, 0.0, -10],
-       [45.7, 0.0, -27.5],
-       [68, 0.0, -28.5],
-       [51, 0.0, -44],
-       [76, 0.0, -3],
-       [81.5, 0.0, 8],
-       [83, 0.0, 42],
-       [50, 0.0, 26],
+      // [16, 0.0, -4],
+      [32, 0.0, 2],
+      [27, 0.0, 30],
+      [2.5, 0.0, 13],
+      [-42, 0.0, 11.5],
+      [-36, 0.0, 28],
+      [-30, 0.0, -7.6],
+      [-48, 0.0, -14],
+      [-40, 0.0, -35],
+      [-27, 0.0, -46.5],
+      [-7, 0.0, -40],
+      [12, 0.0, -47.6],
+      [45, 0.0, -10],
+      [45.7, 0.0, -27.5],
+      [68, 0.0, -28.5],
+      [51, 0.0, -44],
+      [76, 0.0, -3],
+      [81.5, 0.0, 8],
+      [83, 0.0, 42],
+      [50, 0.0, 26],
     ];
 
     ammoLocations.forEach((loc, i) => {
