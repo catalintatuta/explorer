@@ -21,7 +21,7 @@ export default class Weapon extends Component{
         // this.shotSoundBuffer = shotSoundBuffer;
         // this.audioListner = listner;
 
-        this.magAmmo = 2;
+        this.magAmmo = 100;
         this.ammoPerMag = 1;
         this.ammo = 0;
         this.damage = 2;
