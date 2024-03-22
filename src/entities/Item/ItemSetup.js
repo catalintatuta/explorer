@@ -1,6 +1,10 @@
 import Component from '../../Component'
 import {Ammo, AmmoHelper} from '../../AmmoLib'
 
+const pi = Math.PI;
+const maxHeight = 3;
+const minHeight = 2;
+
 export default class ItemSetup extends Component{
     constructor(mesh, scene, physicsWorld){
         super();
@@ -8,10 +12,28 @@ export default class ItemSetup extends Component{
         this.physicsWorld = physicsWorld;
         this.name = 'ItemSetup';
         this.mesh = mesh;
+
+        this.direction = 1;
+        this.update = true;
     }
 
     get IsPlayerInHitbox(){
         return this.hitbox.overlapping;
+    }
+
+    AnimateModel(t) {
+        const entityPos = this.parent.position;
+        //
+        const oldY = entityPos.y;
+        const increment = t / 2 * this.direction;
+        const newY = oldY + increment;
+        this.direction = Math.sign(
+          (this.direction > 0 ? maxHeight : minHeight) - newY
+        );
+        entityPos.y = newY;
+
+        this.mesh.position.copy(entityPos);
+        this.mesh.rotateY((2 * pi / 4) * t);
     }
 
     SetupHitbox(){
@@ -65,6 +87,7 @@ export default class ItemSetup extends Component{
         });
 
         this.scene.add( this.mesh );
+        window.testMesh = this.mesh;
     }
 
     Update(t){
@@ -73,16 +96,9 @@ export default class ItemSetup extends Component{
         //     return;
         // }
 
-        const entityPos = this.parent.position;
-        const entityRot = this.parent.rotation;
-
-        this.mesh.position.copy(entityPos);
-        this.mesh.quaternion.copy(entityRot);
-
+        this.AnimateModel(t);
         const transform = this.collisionObject.getWorldTransform();
-
-        // this.quat.setValue(entityRot.x, entityRot.y, entityRot.z, entityRot.w);
-        // transform.setRotation(this.quat);
+        const entityPos = this.parent.position;
         transform.getOrigin().setValue(entityPos.x, entityPos.y, entityPos.z);
     }
 }
