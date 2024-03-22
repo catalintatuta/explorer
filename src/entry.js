@@ -222,7 +222,7 @@ class FPSGameApp{
     itemEntity.AddComponent(new PickUpTrigger(this.physicsWorld));
     // not sure this does anything:
     // levelEntity.AddComponent(new LevelBulletDecals(this.scene, this.assets['decalColor'], this.assets['decalNormal'], this.assets['decalAlpha']));
-    itemEntity.SetPosition(new THREE.Vector3(16, 0.0, -4));
+    itemEntity.SetPosition(new THREE.Vector3(16, 2, -4));
     this.entityManager.Add(itemEntity);
 
     const skyEntity = new Entity();
