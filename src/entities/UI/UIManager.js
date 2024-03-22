@@ -5,6 +5,8 @@ export default class UIManager extends Component{
         super();
         this.name = 'UIManager';
     }
+    // TODO implement item pick-up menu
+    // TODO remove health logic
 
     SetAmmo(mag, rest){
         document.getElementById("current_ammo").innerText = mag;

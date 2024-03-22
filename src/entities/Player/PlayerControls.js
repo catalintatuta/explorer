@@ -52,6 +52,16 @@ export default class PlayerControls extends Component{
                 document.body.requestPointerLock();
             }
         });
+        Input.AddKeyDownListner(e => {
+            if(e.repeat) return;
+
+            if(e.code == "KeyI") {
+                if (this.isLocked) {
+                    document.exitPointerLock();
+                    console.log('showing inventory')
+                }
+            }
+        })
     }
 
     OnPointerlockChange = () => {

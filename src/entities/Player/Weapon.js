@@ -30,7 +30,7 @@ export default class Weapon extends Component{
         this.hitResult = {intersectionPoint: new THREE.Vector3(), intersectionNormal: new THREE.Vector3()};
 
     }
-
+    // TODO replace ammo logic with inventory, remove ammo > 0 requirement for hit
     SetSoundEffect(){
         // this.shotSound = new THREE.Audio(this.audioListner);
         // this.shotSound.setBuffer(this.shotSoundBuffer);

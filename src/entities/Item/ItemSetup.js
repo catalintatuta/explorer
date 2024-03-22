@@ -48,13 +48,18 @@ export default class ItemSetup extends Component{
 
     TakeHit = msg => {
       if (this.IsPlayerInHitbox) {
-        console.log(msg);
+        if (this.parent.FindEntity("Player").GetComponent("PlayerControls").isLocked) {
+          document.exitPointerLock();
+          console.log('showing pick-up dialog')
+        }
       } else {
         console.log('get closer');
       }
     }
 
     Initialize(){
+        this.uimanager = this.FindEntity("UIManager").GetComponent("UIManager");
+
         this.hitbox = this.GetComponent('PickUpTrigger');
         this.player = this.FindEntity("Player");
 
