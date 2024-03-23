@@ -36,12 +36,6 @@ import ammoboxTexM from './assets/ammo/AmmoBox_M.tga.png'
 import ammoboxTexR from './assets/ammo/AmmoBox_R.tga.png'
 import ammoboxTexAO from './assets/ammo/AmmoBox_AO.tga.png'
 
-//Bullet Decal
-// TODO remove bullet decal
-import decalColor from './assets/decals/decal_c.jpg'
-import decalNormal from './assets/decals/decal_n.jpg'
-import decalAlpha from './assets/decals/decal_a.jpg'
-
 //Sky
 import skyTex from './assets/matrix.jpg'
 
@@ -50,7 +44,6 @@ import Weapon from './entities/Player/Weapon'
 import UIManager from './entities/UI/UIManager'
 import AmmoBox from './entities/AmmoBox/AmmoBox'
 import PickUpTrigger from './entities/Item/PickUpTrigger'
-import LevelBulletDecals from './entities/Level/BulletDecals'
 import PlayerHealth from './entities/Player/PlayerHealth'
 import ItemSetup from "./entities/Item/ItemSetup";
 import {shuffle} from "./utils";
@@ -171,10 +164,6 @@ class FPSGameApp{
     promises.push(this.AddAsset(ammoboxTexM, texLoader, "ammoboxTexM"));
     promises.push(this.AddAsset(ammoboxTexR, texLoader, "ammoboxTexR"));
     promises.push(this.AddAsset(ammoboxTexAO, texLoader, "ammoboxTexAO"));
-    //Decal
-    promises.push(this.AddAsset(decalColor, texLoader, "decalColor"));
-    promises.push(this.AddAsset(decalNormal, texLoader, "decalNormal"));
-    promises.push(this.AddAsset(decalAlpha, texLoader, "decalAlpha"));
 
     promises.push(this.AddAsset(skyTex, texLoader, "skyTex"));
     // Items models
@@ -220,7 +209,6 @@ class FPSGameApp{
     const levelEntity = new Entity();
     levelEntity.SetName('Level');
     levelEntity.AddComponent(new LevelSetup(this.assets['level'], this.scene, this.physicsWorld));
-    levelEntity.AddComponent(new LevelBulletDecals(this.scene, this.assets['decalColor'], this.assets['decalNormal'], this.assets['decalAlpha']));
     this.entityManager.Add(levelEntity);
 
     // Object.keys(item_details).forEach(item_key => {
