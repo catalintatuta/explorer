@@ -52,6 +52,8 @@ export default class ItemSetup extends Component{
         if (this.parent.FindEntity("Player").GetComponent("PlayerControls").isLocked) {
           document.exitPointerLock();
           console.log('pick up ' + this.parent.name + ' ?')
+          // TODO make it only after clicking yes:
+          this.player.Broadcast({topic: 'ItemPickup', item: this.parent.name});
         }
       } else {
         console.log('get closer');

@@ -6,15 +6,12 @@ export default class UIManager extends Component{
         this.name = 'UIManager';
     }
     // TODO implement item pick-up menu
-    // TODO remove health logic
 
-    SetAmmo(mag, rest){
-        document.getElementById("current_ammo").innerText = mag;
-        document.getElementById("max_ammo").innerText = rest;
-    }
-
-    SetHealth(health){
-        document.getElementById("health_progress").style.width = `${health}%`;
+    SetItemCount(itemCount){
+        if (itemCount === 10) {
+          document.getElementById("item_counter").style.color = 'cyan';
+        }
+        document.getElementById("item_count").innerText = itemCount;
     }
 
     Initialize(){

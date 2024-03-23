@@ -1,7 +1,7 @@
 import {FiniteStateMachine, State} from '../../FiniteStateMachine'
 import * as THREE from 'three'
 
-export default class WeaponFSM extends FiniteStateMachine{
+export default class InventoryFSM extends FiniteStateMachine{
     constructor(proxy){
         super();
         this.proxy = proxy;
@@ -27,9 +27,9 @@ class IdleState extends State{
     }
 
     Update(t){
-        if(this.parent.proxy.shoot && this.parent.proxy.magAmmo > 0){
-            this.parent.SetState('shoot');
-        }
+        // if(this.parent.proxy.shoot && this.parent.proxy.magAmmo > 0){
+        //     this.parent.SetState('shoot');
+        // }
     }
 }
 
@@ -45,42 +45,8 @@ class ShootState extends State{
     }
 
     Update(t){
-        if(!this.parent.proxy.shoot || this.parent.proxy.magAmmo == 0){
-            this.parent.SetState('idle');
-        }
-    }
-}
-
-class ReloadState extends State{
-    constructor(parent){
-        super(parent);
-
-        this.parent.proxy.mixer.addEventListener( 'finished', this.AnimationFinished);
-    }
-
-    get Name(){ return 'reload'; }
-    get Animation(){ return this.parent.proxy.animations['reload']; }
-
-    AnimationFinished = e => {
-        if(e.action != this.Animation.action){
-            return;
-        }
-
-        this.parent.proxy.ReloadDone();
-        this.parent.SetState('idle');
-    }
-
-    Enter(prevState){
-        const action = this.Animation.action;
-        action.loop = THREE.LoopOnce;
-
-        if(prevState){
-            action.time = 0.0;
-            action.enabled = true;
-            action.setEffectiveTimeScale(1.0);
-            action.crossFadeFrom(prevState.Animation.action, 0.1, true);
-        }
-
-        action.play();
+        // if(!this.parent.proxy.shoot || this.parent.proxy.magAmmo == 0){
+        //     this.parent.SetState('idle');
+        // }
     }
 }
