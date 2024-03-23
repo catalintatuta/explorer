@@ -23,6 +23,7 @@ export default class Weapon extends Component{
 
         this.magAmmo = 100;
         this.ammoPerMag = 1;
+        // TODO replace ammo logic with inventory, remove ammo > 0 requirement for hit
         this.ammo = 0;
         this.damage = 2;
         this.uimanager = null;
@@ -30,7 +31,6 @@ export default class Weapon extends Component{
         this.hitResult = {intersectionPoint: new THREE.Vector3(), intersectionNormal: new THREE.Vector3()};
 
     }
-    // TODO replace ammo logic with inventory, remove ammo > 0 requirement for hit
     SetSoundEffect(){
         // this.shotSound = new THREE.Audio(this.audioListner);
         // this.shotSound.setBuffer(this.shotSoundBuffer);
@@ -38,6 +38,7 @@ export default class Weapon extends Component{
     }
 
     AmmoPickup = (e) => {
+      // TODO replace ammo logic with inventory, remove ammo > 0 requirement for hit
         this.ammo += 1;
         this.uimanager.SetAmmo(this.magAmmo, this.ammo);
     }

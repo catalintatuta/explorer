@@ -7,6 +7,7 @@ const minHeight = 2;
 
 export default class ItemSetup extends Component{
     constructor(mesh, scene, physicsWorld){
+      // TODO: add interface image to show in menu/pick-up
         super();
         this.scene = scene;
         this.physicsWorld = physicsWorld;
@@ -50,7 +51,7 @@ export default class ItemSetup extends Component{
       if (this.IsPlayerInHitbox) {
         if (this.parent.FindEntity("Player").GetComponent("PlayerControls").isLocked) {
           document.exitPointerLock();
-          console.log('showing pick-up dialog')
+          console.log('pick up ' + this.parent.name + ' ?')
         }
       } else {
         console.log('get closer');
