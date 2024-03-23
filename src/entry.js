@@ -40,11 +40,10 @@ import ammoboxTexAO from './assets/ammo/AmmoBox_AO.tga.png'
 import skyTex from './assets/matrix.jpg'
 
 import DebugDrawer from './DebugDrawer'
-import Weapon from './entities/Player/Weapon'
+import Inventory from './entities/Player/Inventory'
 import UIManager from './entities/UI/UIManager'
 import AmmoBox from './entities/AmmoBox/AmmoBox'
 import PickUpTrigger from './entities/Item/PickUpTrigger'
-import PlayerHealth from './entities/Player/PlayerHealth'
 import ItemSetup from "./entities/Item/ItemSetup";
 import {shuffle} from "./utils";
 
@@ -229,10 +228,9 @@ class FPSGameApp{
     playerEntity.SetName("Player");
     playerEntity.AddComponent(new PlayerPhysics(this.physicsWorld, Ammo));
     playerEntity.AddComponent(new PlayerControls(this.camera, this.scene));
-    playerEntity.AddComponent(new Weapon(this.camera, this.physicsWorld,
+    playerEntity.AddComponent(new Inventory(this.camera, this.physicsWorld,
       // this.assets['ak47Shot'], this.listener
     ));
-    playerEntity.AddComponent(new PlayerHealth());
     playerEntity.SetPosition(new THREE.Vector3(2.14, 1.48, -1.36));
     playerEntity.SetRotation(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0), -Math.PI * 0.5));
     this.entityManager.Add(playerEntity);
@@ -281,7 +279,7 @@ class FPSGameApp{
       [32, 2, 2],
       [27, 2, 30],
       [2.5, 2, 13],
-      [-42, 2, 11.5],
+      [-40, 2, 13],
       [-36, 2, 28],
       [-30, 2, -7.6],
       [-48, 2, -14],
