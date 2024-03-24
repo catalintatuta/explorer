@@ -147,6 +147,10 @@
       #pick_answer {
           background: rgb(24 89 107 / 50%);
       }
+      #full_inventory {
+          display: none;
+          background: rgb(24 89 107 / 50%);
+      }
       .intro_description {
           width: 80vw;
       }
@@ -194,6 +198,12 @@
                 <div class="flex_row">
                     <button class="dialog_button" id="confirm_item">yes</button>
                     <button class="dialog_button" id="decline_item">no</button>
+                </div>
+            </div>
+            <div class="flex_column center" id="full_inventory">
+                <p>Your inventory is full, you can't pick this up.</p>
+                <div class="flex_row">
+                    <button class="dialog_button" id="close_dialog">ok</button>
                 </div>
             </div>
         </div>

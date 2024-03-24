@@ -54,13 +54,8 @@ export default class ItemSetup extends Component{
     }
 
     ConfirmPickup = (item) => {
-        const {inventory, maxItems} = this.player.GetComponent('Inventory')
-        if (inventory.length >= maxItems) {
-            this.uimanager.ShowError('Inventory Full')
-        } else {
-            this.player.Broadcast({topic: 'ItemPickup', item });
-            this.Disable();
-        }
+        this.player.Broadcast({topic: 'ItemPickup', item });
+        this.Disable();
         this.player.GetComponent('PlayerControls').HandleMenu(false);
     };
 
@@ -68,6 +63,10 @@ export default class ItemSetup extends Component{
       if (this.IsPlayerInHitbox) {
         const proceed = this.player.GetComponent('PlayerControls').HandleMenu(true);
         if (proceed) {
+          const {inventory, maxItems} = this.player.GetComponent('Inventory')
+          if (inventory.length >= maxItems) {
+            this.uimanager.SetInventoryFull(true);
+          }
           this.uimanager.ShowItemDialog(
             this.parent.name,
             () => this.ConfirmPickup(this.parent.name),

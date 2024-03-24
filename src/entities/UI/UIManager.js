@@ -17,6 +17,16 @@ export default class UIManager extends Component{
         }
     }
 
+    SetInventoryFull(full) {
+        if (full) {
+            document.getElementById('pick_answer').style.display = 'none';
+            document.getElementById('full_inventory').style.display = 'flex';
+        } else {
+            document.getElementById('pick_answer').style.display = 'flex';
+            document.getElementById('full_inventory').style.display = 'none';
+        }
+    }
+
     ShowItemDialog(item, confirm, decline){
         if (item_details[item]) {
             // TODO extract single item UI construction logic to re-use in inventory
@@ -51,9 +61,16 @@ export default class UIManager extends Component{
                 }
                 this.HandleMenu('dialog', false);
             }
+            document.getElementById('close_dialog').onclick = () => {
+                decline();
+                if (images.length > 1 && interval) {
+                    clearInterval(interval)
+                }
+                this.HandleMenu('dialog', false);
+            }
             this.HandleMenu('dialog', true);
         } else {
-            this.ShowError('Unknown Item');
+            this.LogError('Unknown Item');
         }
     }
 
@@ -71,7 +88,7 @@ export default class UIManager extends Component{
         document.getElementById(menuId).style.visibility = opening ? 'visible' : 'hidden';
     }
 
-    ShowError(message) {
+    LogError(message) {
       // TODO: show this in the menu
         console.error(message);
     }
