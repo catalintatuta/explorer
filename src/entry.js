@@ -51,7 +51,7 @@ class FPSGameApp{
   Init(){
     this.LoadAssets();
     this.SetupGraphics();
-    this.SetupStartButton();
+    this.SetupMainMenus();
   }
 
   SetupGraphics(){
@@ -128,12 +128,18 @@ class FPSGameApp{
     this.OnProgress(0);
   }
 
-  SetupStartButton(){
+  SetupMainMenus(){
+    document.getElementById('show_intro').addEventListener('click', this.ShowIntro);
     document.getElementById('start_game').addEventListener('click', this.StartGame);
   }
 
-  ShowMenu(visible=true){
+  ShowMenu = (visible=true) => {
     document.getElementById('menu').style.visibility = visible?'visible':'hidden';
+  }
+
+  ShowIntro = (visible=true) => {
+    this.ShowMenu(false);
+    document.getElementById('intro').style.visibility = visible ? 'visible':'hidden';
   }
 
   async LoadAssets(){
@@ -239,7 +245,7 @@ class FPSGameApp{
     this.scene.clear();
     this.SetupPhysics();
     this.EntitySetup();
-    this.ShowMenu(false);
+    this.ShowIntro(false);
   }
 
   // resize

@@ -5,8 +5,12 @@
     <title><%= htmlWebpackPlugin.options.title %></title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39+Text&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<!--    <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39+Text&family=Roboto:wght@400;700&display=swap" rel="stylesheet">-->
     <style>
+      @font-face {
+          font-family: 'Arcade Alternate';
+          src: url('src/assets/fonts/ArcadeAlternate.ttf');
+      }
       body{
         margin: 0;
         font-family: 'Roboto', sans-serif;
@@ -48,18 +52,31 @@
         flex-direction: column;
         visibility: hidden;
       }
+      #intro{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        visibility: hidden;
+        overflow: scroll;
+      }
       h1{
-        font-family: 'Libre Barcode 39 Text', cursive;
+        font-family: 'Arcade Alternate';
         font-size: 4em;
       }
-      #start_game{
-        background-color: rgba(0,0,0,0);
-        color: rgb(221, 221, 221);
-        font-size: 1.5em;
-        border: none;
-        cursor: pointer;
-        margin-top: 10%;
-        font-weight: 700;
+      .main_menu_button {
+          background-color: rgba(0,0,0,0);
+          color: rgb(221, 221, 221);
+          font-size: 1.5em;
+          border: none;
+          cursor: pointer;
+          margin-top: 10%;
+          font-weight: 700;
       }
       #debug{
         position: absolute;
@@ -130,6 +147,9 @@
       #pick_answer {
           background: rgb(24 89 107 / 50%);
       }
+      .intro_description {
+          width: 80vw;
+      }
     </style>
   </head>
 
@@ -137,7 +157,22 @@
     <div id="debug"></div>
     <div id="menu">
       <h1>ECHOES OF BYTES</h1>
-      <button id="start_game">start</button>
+      <button id="show_intro" class="main_menu_button">new game</button>
+    </div>
+    <div id="intro">
+        <h2>What’s this about? Well…</h2>
+        <p class="intro_description">
+          Players step into the shoes of a virtual anthropologist tasked with navigating through the digital artifacts of various individuals. As they sift through each digital property, players uncover fragments of personal stories, cultural trends, and societal norms embedded within the digital artifacts. Through this interactive experience, players gain insights into the diverse ways in which individuals construct and navigate their digital identities within broader socio-cultural contexts.
+        </p>
+        <p class="intro_description">
+            <em>
+                How might this immersive experience illuminate the intricate dance between individual identities and the rich tapestry of societal norms?
+                In sifting through files, photos, and other personal digital artifacts, what fragments of personal narratives do you envision piecing together?
+            </em>
+        </p>
+        <h2>Instructions</h2>
+        <p class="intro_description">Use <strong>WASD</strong> and the <strong>cursor</strong> to move<br/> <strong>Click</strong> on items to pick them up<br/> Press <strong>I</strong> to open the inventory</p>
+        <button id="start_game" class="main_menu_button">start</button>
     </div>
     <div class="fullscreen_wrapper" id="inventory">
         <div id="inventory_box">

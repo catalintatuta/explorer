@@ -55,6 +55,7 @@ Art assets used in this project:
 * Clouds by Poly by Google [CC-BY](https://creativecommons.org/licenses/by/3.0/) via [Poly Pizza](https://poly.pizza/m/5vL346OfNST)
 * Thumb drive by Poly by Google [CC-BY](https://creativecommons.org/licenses/by/3.0/) via [Poly Pizza](https://poly.pizza/m/8DhBCSmGQ2I)
 * Cumulus Clouds 5 by S. Paul Michael [CC-BY](https://creativecommons.org/licenses/by/3.0/) via [Poly Pizza](https://poly.pizza/m/25RmW99gwuv)
+* Arcade Alternate font is created and owned by Muizz Kasim (muizzkasim@gmail.com).
 
 ## Thanks to
 * [Three Seed](https://github.com/edwinwebb/three-seed)
