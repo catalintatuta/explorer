@@ -28,21 +28,12 @@ import level from './assets/cloud_map_2.glb'
 //Items
 import {item_models, item_details} from "./items_info";
 
-//Ammo box
-import ammobox from './assets/ammo/AmmoBox.fbx'
-import ammoboxTexD from './assets/ammo/AmmoBox_D.tga.png'
-import ammoboxTexN from './assets/ammo/AmmoBox_N.tga.png'
-import ammoboxTexM from './assets/ammo/AmmoBox_M.tga.png'
-import ammoboxTexR from './assets/ammo/AmmoBox_R.tga.png'
-import ammoboxTexAO from './assets/ammo/AmmoBox_AO.tga.png'
-
 //Sky
 import skyTex from './assets/matrix.jpg'
 
 import DebugDrawer from './DebugDrawer'
 import Inventory from './entities/Player/Inventory'
 import UIManager from './entities/UI/UIManager'
-import AmmoBox from './entities/AmmoBox/AmmoBox'
 import PickUpTrigger from './entities/Item/PickUpTrigger'
 import ItemSetup from "./entities/Item/ItemSetup";
 import {shuffle} from "./utils";
@@ -154,15 +145,6 @@ class FPSGameApp{
 
     //Level
     promises.push(this.AddAsset(level, gltfLoader, "level"));
-    //Player
-    // promises.push(this.AddAsset(ak47Shot, audioLoader, "ak47Shot"));
-    //Ammo box
-    promises.push(this.AddAsset(ammobox, fbxLoader, "ammobox"));
-    promises.push(this.AddAsset(ammoboxTexD, texLoader, "ammoboxTexD"));
-    promises.push(this.AddAsset(ammoboxTexN, texLoader, "ammoboxTexN"));
-    promises.push(this.AddAsset(ammoboxTexM, texLoader, "ammoboxTexM"));
-    promises.push(this.AddAsset(ammoboxTexR, texLoader, "ammoboxTexR"));
-    promises.push(this.AddAsset(ammoboxTexAO, texLoader, "ammoboxTexAO"));
 
     promises.push(this.AddAsset(skyTex, texLoader, "skyTex"));
     // Items models
@@ -177,26 +159,6 @@ class FPSGameApp{
       this.assets[el.id] = this.assets[el.id].scene;
     })
 
-    //Set ammo box textures and other props
-    this.assets['ammobox'].scale.set(0.01, 0.01, 0.01);
-    this.assets['ammobox'].traverse(child =>{
-      child.castShadow = true;
-      child.receiveShadow = true;
-
-      child.material = new THREE.MeshStandardMaterial({
-        map: this.assets['ammoboxTexD'],
-        aoMap: this.assets['ammoboxTexAO'],
-        normalMap: this.assets['ammoboxTexN'],
-        metalness: 1,
-        metalnessMap: this.assets['ammoboxTexM'],
-        roughnessMap: this.assets['ammoboxTexR'],
-        color: new THREE.Color(0.4, 0.4, 0.4)
-      });
-
-    });
-
-    this.assets['ammoboxShape'] = createConvexHullShape(this.assets['ammobox']);
-
     this.HideProgress();
     this.ShowMenu();
   }
@@ -208,15 +170,6 @@ class FPSGameApp{
     levelEntity.SetName('Level');
     levelEntity.AddComponent(new LevelSetup(this.assets['level'], this.scene, this.physicsWorld));
     this.entityManager.Add(levelEntity);
-
-    // Object.keys(item_details).forEach(item_key => {
-    //   const itemEntity = new Entity();
-    //   itemEntity.SetName(item_key);
-    //   itemEntity.AddComponent(new ItemSetup(this.assets[item_key], this.scene, this.physicsWorld));
-    //   itemEntity.AddComponent(new PickUpTrigger(this.physicsWorld));
-    //   itemEntity.SetPosition(new THREE.Vector3(16, 2, -4));
-    //   this.entityManager.Add(itemEntity);
-    // })
 
     const skyEntity = new Entity();
     skyEntity.SetName("Sky");
@@ -240,26 +193,26 @@ class FPSGameApp{
     this.entityManager.Add(uimanagerEntity);
 
     const itemPositions = shuffle([
-      [16, 2, -4],
-      [32, 2, 2],
-      // [27, 2, 30],
-      // [2.5, 2, 13],
-      // [-42, 2, 11.5],
-      // [-36, 2, 28],
-      // [-30, 2, -7.6],
-      // [-48, 2, -14],
-      // [-40, 2, -35],
-      // [-27, 2, -46.5],
-      // [-7, 2, -40],
-      // [12, 2, -47.6],
-      // [45, 2, -10],
-      // [45.7, 2, -27.5],
-      // [68, 2, -28.5],
-      // [51, 2, -44],
-      // [76, 2, -3],
-      // [81.5, 2, 8],
-      // [83, 2, 42],
-      // [50, 2, 26],
+      [16, 1.5, -4],
+      [32, 1.5, 2],
+      [27, 1.5, 30],
+      [2.5, 1.5, 13],
+      [-40, 1.5, 13],
+      [-37.5, 1.5, 26.5],
+      [-30, 1.5, -7.6],
+      [-48, 1.5, -14],
+      [-40, 1.5, -35],
+      [-27, 1.5, -46.5],
+      [-7, 1.5, -40],
+      [12, 1.5, -47.6],
+      [45, 1.5, -10],
+      [45.7, 1.5, -27.5],
+      [68, 1.5, -28.5],
+      [51, 1.5, -44],
+      [76, 1.5, -3],
+      [81.5, 1.5, 8],
+      [83, 1.5, 42],
+      [50, 1.5, 26],
     ]);
 
     Object.keys(item_details).forEach(item_key => {
@@ -271,38 +224,6 @@ class FPSGameApp{
       itemEntity.SetPosition(new THREE.Vector3(loc[0], loc[1], loc[2]));
       this.entityManager.Add(itemEntity);
     })
-
-    // TODO: delete this:
-    const ammoLocations = [
-      // [16, 2, -4],
-      // [32, 2, 2],
-      [27, 2, 30],
-      [2.5, 2, 13],
-      [-40, 2, 13],
-      [-36, 2, 28],
-      [-30, 2, -7.6],
-      [-48, 2, -14],
-      [-40, 2, -35],
-      [-27, 2, -46.5],
-      [-7, 2, -40],
-      [12, 2, -47.6],
-      [45, 2, -10],
-      [45.7, 2, -27.5],
-      [68, 2, -28.5],
-      [51, 2, -44],
-      [76, 2, -3],
-      [81.5, 2, 8],
-      [83, 2, 42],
-      [50, 2, 26],
-    ];
-
-    ammoLocations.forEach((loc, i) => {
-      const box = new Entity();
-      box.SetName(`AmmoBox${i}`);
-      box.AddComponent(new AmmoBox(this.scene, this.assets['ammobox'].clone(), this.assets['ammoboxShape'], this.physicsWorld));
-      box.SetPosition(new THREE.Vector3(loc[0], loc[1], loc[2]));
-      this.entityManager.Add(box);
-    });
 
     this.entityManager.EndSetup();
 

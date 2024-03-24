@@ -39,9 +39,6 @@ export default class Inventory extends Component{
 
         this.uimanager.SetItemCount(0, this.maxItems);
         this.SetupInput();
-
-      // TODO remove this handler
-        this.parent.RegisterEventHandler(this.ItemPickup, "AmmoPickup");
         //Listen to item pickup event
         this.parent.RegisterEventHandler(this.ItemPickup, "ItemPickup");
     }

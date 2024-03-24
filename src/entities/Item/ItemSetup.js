@@ -2,8 +2,8 @@ import Component from '../../Component'
 import {Ammo, AmmoHelper} from '../../AmmoLib'
 
 const pi = Math.PI;
-const maxHeight = 3;
-const minHeight = 2;
+const maxHeight = 2.5;
+const minHeight = 1.5;
 
 export default class ItemSetup extends Component{
     constructor(mesh, scene, physicsWorld){

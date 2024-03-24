@@ -20,28 +20,41 @@ export default class UIManager extends Component{
 
     ShowItemDialog(item, confirm, decline){
         if (item_details[item]) {
-          const {name, description, images} = item_details[item];
-          document.getElementById("item_name").innerText = name;
-          document.getElementById("item_description").innerText = description;
-          if (images.length > 1) {
-            // TODO handle multiple images
-            // https://developer.mozilla.org/en-US/docs/Web/API/Node/cloneNode
-            document.getElementById("item_image").style.backgroundImage = `url(${images[0]})`;
-          } else {
-            document.getElementById("item_image").style.backgroundImage = `url(${images[0]})`;
-          }
-          document.getElementById('confirm_item').onclick = () => {
-            confirm();
-            this.HandleMenu('dialog_wrapper', false);
-          }
-          document.getElementById('decline_item').onclick = () => {
-            decline();
-            this.HandleMenu('dialog_wrapper', false);
-          }
-          this.HandleMenu('dialog_wrapper', true);
+            let interval;
+            const {name, description, images} = item_details[item];
+            document.getElementById("item_name").innerText = name;
+            document.getElementById("item_description").innerText = description;
+            if (images.length > 1) {
+                document.getElementById("item_image").style.backgroundImage = `url(${images[0]})`;
+                let i = 1
+                interval = setInterval(() => {
+                    document.getElementById("item_image").style.backgroundImage = `url(${images[i]})`;
+                    i++;
+                    if (i === images.length) {
+                        i = 0;
+                    }
+                }, 1000);
+            } else {
+                document.getElementById("item_image").style.backgroundImage = `url(${images[0]})`;
+            }
+            document.getElementById('confirm_item').onclick = () => {
+                confirm();
+                if (images.length > 1 && interval) {
+                    clearInterval(interval)
+                }
+                this.HandleMenu('dialog_wrapper', false);
+            }
+            document.getElementById('decline_item').onclick = () => {
+                decline();
+                if (images.length > 1 && interval) {
+                    clearInterval(interval)
+                }
+                this.HandleMenu('dialog_wrapper', false);
+            }
+            this.HandleMenu('dialog_wrapper', true);
         } else {
-          // TODO: remove after removing all ammo from map
-          console.log(item)
+            // TODO: remove after removing all ammo from map
+            console.log(item)
         }
     }
 
