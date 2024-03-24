@@ -15,20 +15,18 @@ export default class Inventory extends Component{
         this.world = world;
 
         this.inventory = [];
+        this.maxItems = 10;
         this.uimanager = null;
         this.hitResult = {intersectionPoint: new THREE.Vector3(), intersectionNormal: new THREE.Vector3()};
 
     }
 
-    AmmoPickup = (e) => {
-        // TODO remove this handler
-        this.inventory.push(e.item);
-        this.uimanager.SetItemCount(this.inventory.length);
-    }
-
     ItemPickup = (e) => {
+        if (this.inventory.length >= this.maxItems) {
+          return;
+        }
         this.inventory.push(e.item)
-        this.uimanager.SetItemCount(this.inventory.length);
+        this.uimanager.SetItemCount(this.inventory.length, this.maxItems);
     }
 
     Initialize(){
@@ -39,10 +37,12 @@ export default class Inventory extends Component{
 
         this.uimanager = this.FindEntity("UIManager").GetComponent("UIManager");
 
+        this.uimanager.SetItemCount(0, this.maxItems);
         this.SetupInput();
 
+      // TODO remove this handler
+        this.parent.RegisterEventHandler(this.ItemPickup, "AmmoPickup");
         //Listen to item pickup event
-        this.parent.RegisterEventHandler(this.AmmoPickup, "AmmoPickup");
         this.parent.RegisterEventHandler(this.ItemPickup, "ItemPickup");
     }
 

@@ -52,7 +52,7 @@
         font-family: 'Libre Barcode 39 Text', cursive;
         font-size: 4em;
       }
-      button{
+      #start_game{
         background-color: rgba(0,0,0,0);
         color: rgb(221, 221, 221);
         font-size: 1.5em;
@@ -66,6 +66,49 @@
         right: 5%;
         top: 5%;
       }
+      .flex_row {
+          display: flex;
+          flex-direction: row;
+      }
+      .flex_column {
+          display: flex;
+          flex-direction: column;
+      }
+      .center {
+          align-items: center;
+      }
+      #dialog_wrapper {
+          position: absolute;
+          visibility: hidden;
+          display: flex;
+          width: 100%;
+          height: 100%;
+          justify-content: center;
+          align-items: center;
+          background: rgb(48 55 55 / 50%);
+      }
+      #dialog_box {
+          width: 50vw;
+          height: calc(30vh + 80px);
+          padding: 20px;
+          border-radius: 13px;
+          background: rgb(43 147 176 / 54%);
+          box-shadow: 0px 0px 89px 65px rgb(38 38 38 / 36%);
+      }
+      .dialog_button {
+          background-color: rgba(0,0,0,0);
+          color: rgb(221, 221, 221);
+          font-size: 1.5em;
+          border: none;
+          cursor: pointer;
+      }
+      #item_image {
+          height: 30vh;
+      }
+      #image_wrapper {
+          padding-right: 20px;
+          width: 30vh;
+      }
     </style>
   </head>
 
@@ -76,13 +119,32 @@
       <button id="start_game">start</button>
     </div>
     <div id="inventory"></div>
-    <div id="dialog"></div>
+    <div id="dialog_wrapper">
+        <div id="dialog_box">
+            <div class="flex_row">
+                <div class="flex_column center" id="image_wrapper">
+                    <img id="item_image" src="" alt="" />
+                </div>
+                <div class="flex_column">
+                    <h3 id="item_name"></h3>
+                    <div id="item_description"></div>
+                </div>
+            </div>
+            <div class="flex_column center">
+                <p>Pick it up ?</p>
+                <div class="flex_row">
+                    <button class="dialog_button" id="confirm_item">yes</button>
+                    <button class="dialog_button" id="decline_item">no</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="game_hud">
       <img id="crosshair" src="<%=require('./ui/crosshair.png')%>" />
       <div id="item_counter">
-        <span id="item_count">0</span>
+        <span id="item_count"></span>
         <span>|</span>
-        <span id="max_items">10</span>
+        <span id="max_items"></span>
       </div>
     </div>
     <div id="progress"></div>

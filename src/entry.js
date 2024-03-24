@@ -26,7 +26,7 @@ import level from './assets/cloud_map_2.glb'
 // import ak47Shot from './assets/sounds/ak47_shot.wav'
 
 //Items
-import {item_assets, item_details} from "./items_info";
+import {item_models, item_details} from "./items_info";
 
 //Ammo box
 import ammobox from './assets/ammo/AmmoBox.fbx'
@@ -166,15 +166,14 @@ class FPSGameApp{
 
     promises.push(this.AddAsset(skyTex, texLoader, "skyTex"));
     // Items models
-    item_assets.forEach(el => promises.push(
+    item_models.forEach(el => promises.push(
       this.AddAsset(el.model, gltfLoader, el.id)
     ))
-    // TODO load item images as well
 
     await this.PromiseProgress(promises, this.OnProgress);
 
     this.assets['level'] = this.assets['level'].scene;
-    item_assets.forEach(el => {
+    item_models.forEach(el => {
       this.assets[el.id] = this.assets[el.id].scene;
     })
 

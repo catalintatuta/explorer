@@ -22,6 +22,12 @@ export default class ItemSetup extends Component{
         return this.hitbox.overlapping;
     }
 
+    Disable(){
+        this.update = false;
+        this.scene.remove(this.mesh);
+        this.physicsWorld.removeCollisionObject(this.collisionObject);
+    }
+
     AnimateModel(t) {
         const entityPos = this.parent.position;
         //
@@ -47,13 +53,38 @@ export default class ItemSetup extends Component{
         this.physicsWorld.addCollisionObject(object)
     }
 
+    ConfirmPickup = (item) => {
+        const {inventory, maxItems} = this.player.GetComponent('Inventory')
+        if (inventory.length >= maxItems) {
+            this.uimanager.ShowError('Inventory Full')
+        } else {
+            this.player.Broadcast({topic: 'ItemPickup', item });
+            this.Disable();
+        }
+        if(!this.player.GetComponent('PlayerControls').isLocked) {
+            document.body.requestPointerLock();
+        }
+        this.player.GetComponent("PlayerControls").menuOpen = false;
+    };
+
+    DeclinePickup = () => {
+        if(!this.player.GetComponent("PlayerControls").isLocked) {
+            document.body.requestPointerLock();
+        }
+        this.player.GetComponent("PlayerControls").menuOpen = false;
+    };
     TakeHit = msg => {
       if (this.IsPlayerInHitbox) {
-        if (this.parent.FindEntity("Player").GetComponent("PlayerControls").isLocked) {
+        if (this.player.GetComponent("PlayerControls").isLocked) {
           document.exitPointerLock();
+          this.player.GetComponent("PlayerControls").menuOpen = true;
+          this.uimanager.ShowItemDialog(
+            this.parent.name,
+            () => this.ConfirmPickup(this.parent.name),
+            this.DeclinePickup);
           console.log('pick up ' + this.parent.name + ' ?')
           // TODO make it only after clicking yes:
-          this.player.Broadcast({topic: 'ItemPickup', item: this.parent.name});
+
         }
       } else {
         console.log('get closer');
@@ -99,10 +130,9 @@ export default class ItemSetup extends Component{
     }
 
     Update(t){
-        // TODO add removal of logic after pick-up
-        // if(!this.update){
-        //     return;
-        // }
+        if(!this.update){
+            return;
+        }
 
         this.AnimateModel(t);
         const transform = this.collisionObject.getWorldTransform();

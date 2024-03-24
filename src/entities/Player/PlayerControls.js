@@ -33,6 +33,8 @@ export default class PlayerControls extends Component{
         this.moveDir = new THREE.Vector3();
         this.xAxis = new THREE.Vector3(1.0, 0.0, 0.0);
         this.yAxis = new THREE.Vector3(0.0, 1.0, 0.0);
+
+        this.menuOpen = false
     }
 
     Initialize(){
@@ -47,7 +49,10 @@ export default class PlayerControls extends Component{
 
         document.addEventListener('pointerlockchange', this.OnPointerlockChange)
 
-        Input.AddClickListner( () => {
+        Input.AddClickListner( (e) => {
+            if (this.menuOpen){
+              return
+            }
             if(!this.isLocked){
                 document.body.requestPointerLock();
             }
