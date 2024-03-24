@@ -19,6 +19,7 @@ export default class UIManager extends Component{
 
     ShowItemDialog(item, confirm, decline){
         if (item_details[item]) {
+            // TODO extract single item UI construction logic to re-use in inventory
             let interval;
             const {name, description, images} = item_details[item];
             document.getElementById("item_name").innerText = name;
@@ -54,6 +55,15 @@ export default class UIManager extends Component{
         } else {
             this.ShowError('Unknown Item');
         }
+    }
+
+    ShowInventory(items, close, deleteItem){
+        document.getElementById('items_list').innerText = items.join('\n');
+        document.getElementById('close_inventory').onclick = () => {
+            close();
+            this.HandleMenu('inventory', false);
+        }
+        this.HandleMenu('inventory', true);
     }
 
     HandleMenu(menuId, opening) {

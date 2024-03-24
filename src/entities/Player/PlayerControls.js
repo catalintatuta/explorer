@@ -63,9 +63,18 @@ export default class PlayerControls extends Component{
             if(e.repeat) return;
 
             if(e.code == "KeyI") {
-                if (this.isLocked) {
-                    document.exitPointerLock();
-                    console.log('showing inventory')
+                const proceed = this.HandleMenu(true);
+                if (proceed) {
+                    const {inventory} = this.parent.GetComponent('Inventory')
+                    this.uimanager.ShowInventory(
+                       inventory,
+                       () => this.HandleMenu(false),
+                       (item) => {
+                        // TODO add some inventory event for deleting item, handle it here with
+                        // this.parent.Broadcast({topic: 'DeleteItem', item });
+                         console.log('deleting ' + item);
+                       }
+                    )
                 }
             }
         })
