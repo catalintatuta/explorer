@@ -241,7 +241,7 @@ class FPSGameApp{
 
     const itemPositions = shuffle([
       [16, 2, -4],
-      // [32, 2, 2],
+      [32, 2, 2],
       // [27, 2, 30],
       // [2.5, 2, 13],
       // [-42, 2, 11.5],
@@ -275,7 +275,7 @@ class FPSGameApp{
     // TODO: delete this:
     const ammoLocations = [
       // [16, 2, -4],
-      [32, 2, 2],
+      // [32, 2, 2],
       [27, 2, 30],
       [2.5, 2, 13],
       [-40, 2, 13],
