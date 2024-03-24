@@ -25,6 +25,7 @@ export default class UIManager extends Component{
           document.getElementById("item_description").innerText = description;
           if (images.length > 1) {
             // TODO handle multiple images
+            // https://developer.mozilla.org/en-US/docs/Web/API/Node/cloneNode
             document.getElementById("item_image").src = images[0];
           } else {
             document.getElementById("item_image").src = images[0];
