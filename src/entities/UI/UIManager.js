@@ -26,9 +26,9 @@ export default class UIManager extends Component{
           if (images.length > 1) {
             // TODO handle multiple images
             // https://developer.mozilla.org/en-US/docs/Web/API/Node/cloneNode
-            document.getElementById("item_image").src = images[0];
+            document.getElementById("item_image").style.backgroundImage = `url(${images[0]})`;
           } else {
-            document.getElementById("item_image").src = images[0];
+            document.getElementById("item_image").style.backgroundImage = `url(${images[0]})`;
           }
           document.getElementById('confirm_item').onclick = () => {
             confirm();

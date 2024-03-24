@@ -69,6 +69,7 @@
       .flex_row {
           display: flex;
           flex-direction: row;
+          gap: 20px;
       }
       .flex_column {
           display: flex;
@@ -103,11 +104,14 @@
           cursor: pointer;
       }
       #item_image {
-          height: 30vh;
-      }
-      #image_wrapper {
           padding-right: 20px;
-          width: 30vh;
+          height: 30vh;
+          min-width: 15vw;
+          background-size: contain;
+          background-repeat: no-repeat;
+      }
+      #item_description {
+          font-style: italic;
       }
     </style>
   </head>
@@ -122,9 +126,7 @@
     <div id="dialog_wrapper">
         <div id="dialog_box">
             <div class="flex_row">
-                <div class="flex_column center" id="image_wrapper">
-                    <img id="item_image" src="" alt="" />
-                </div>
+                <div id="item_image"></div>
                 <div class="flex_column">
                     <h3 id="item_name"></h3>
                     <div id="item_description"></div>
