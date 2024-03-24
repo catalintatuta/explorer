@@ -6,15 +6,14 @@ export default class UIManager extends Component{
         super();
         this.name = 'UIManager';
     }
-    // TODO implement item pick-up menu
 
     SetItemCount(itemCount, maxItems){
         if (itemCount === maxItems) {
-          document.getElementById("item_counter").style.color = 'cyan';
+            document.getElementById("item_counter").style.color = 'cyan';
         }
         document.getElementById("item_count").innerText = itemCount;
         if (maxItems) {
-          document.getElementById("max_items").innerText = maxItems;
+            document.getElementById("max_items").innerText = maxItems;
         }
     }
 
@@ -42,25 +41,24 @@ export default class UIManager extends Component{
                 if (images.length > 1 && interval) {
                     clearInterval(interval)
                 }
-                this.HandleMenu('dialog_wrapper', false);
+                this.HandleMenu('dialog', false);
             }
             document.getElementById('decline_item').onclick = () => {
                 decline();
                 if (images.length > 1 && interval) {
                     clearInterval(interval)
                 }
-                this.HandleMenu('dialog_wrapper', false);
+                this.HandleMenu('dialog', false);
             }
-            this.HandleMenu('dialog_wrapper', true);
+            this.HandleMenu('dialog', true);
         } else {
-            // TODO: remove after removing all ammo from map
-            console.log(item)
+            this.ShowError('Unknown Item');
         }
     }
 
-    HandleMenu(menuId, open) {
-      document.getElementById('crosshair').style.visibility = open ? 'hidden' : 'visible';
-      document.getElementById(menuId).style.visibility = open ? 'visible' : 'hidden';
+    HandleMenu(menuId, opening) {
+        document.getElementById('crosshair').style.visibility = opening ? 'hidden' : 'visible';
+        document.getElementById(menuId).style.visibility = opening ? 'visible' : 'hidden';
     }
 
     ShowError(message) {

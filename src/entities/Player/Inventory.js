@@ -3,8 +3,6 @@ import Component from '../../Component'
 import Input from '../../Input'
 import {Ammo, AmmoHelper, CollisionFilterGroups} from '../../AmmoLib'
 
-import InventoryFSM from './InventoryFSM';
-
 
 export default class Inventory extends Component{
     constructor(camera, world,
@@ -30,10 +28,6 @@ export default class Inventory extends Component{
     }
 
     Initialize(){
-
-        // TODO maybe delete this, or use it for menu
-        this.stateMachine = new InventoryFSM(this);
-        this.stateMachine.SetState('idle');
 
         this.uimanager = this.FindEntity("UIManager").GetComponent("UIManager");
 
@@ -73,12 +67,11 @@ export default class Inventory extends Component{
             const rigidBody = Ammo.castObject( this.hitResult.collisionObject, Ammo.btRigidBody );
             const entity = ghostBody.parentEntity || rigidBody.parentEntity;
 
-            entity && entity.Broadcast({'topic': 'hit', from: this.parent, hitResult: this.hitResult});
+            entity && entity.Broadcast({'topic': 'clicked'});
         }
     }
 
     Update(t){
-        this.stateMachine.Update(t);
     }
 
 }

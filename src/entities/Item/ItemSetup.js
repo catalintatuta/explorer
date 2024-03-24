@@ -7,8 +7,8 @@ const minHeight = 1.5;
 
 export default class ItemSetup extends Component{
     constructor(mesh, scene, physicsWorld){
-      // TODO: add interface image to show in menu/pick-up
         super();
+        this.uimanager = null;
         this.scene = scene;
         this.physicsWorld = physicsWorld;
         this.name = 'ItemSetup';
@@ -61,30 +61,18 @@ export default class ItemSetup extends Component{
             this.player.Broadcast({topic: 'ItemPickup', item });
             this.Disable();
         }
-        if(!this.player.GetComponent('PlayerControls').isLocked) {
-            document.body.requestPointerLock();
-        }
-        this.player.GetComponent("PlayerControls").menuOpen = false;
+        this.player.GetComponent('PlayerControls').HandleMenu(false);
     };
 
-    DeclinePickup = () => {
-        if(!this.player.GetComponent("PlayerControls").isLocked) {
-            document.body.requestPointerLock();
-        }
-        this.player.GetComponent("PlayerControls").menuOpen = false;
-    };
-    TakeHit = msg => {
+    TriggerPickUp = msg => {
       if (this.IsPlayerInHitbox) {
-        if (this.player.GetComponent("PlayerControls").isLocked) {
-          document.exitPointerLock();
-          this.player.GetComponent("PlayerControls").menuOpen = true;
+        const proceed = this.player.GetComponent('PlayerControls').HandleMenu(true);
+        if (proceed) {
           this.uimanager.ShowItemDialog(
             this.parent.name,
             () => this.ConfirmPickup(this.parent.name),
-            this.DeclinePickup);
-          console.log('pick up ' + this.parent.name + ' ?')
-          // TODO make it only after clicking yes:
-
+            () => this.player.GetComponent('PlayerControls').HandleMenu(false)
+          );
         }
       } else {
         console.log('get closer');
@@ -97,7 +85,7 @@ export default class ItemSetup extends Component{
         this.hitbox = this.GetComponent('PickUpTrigger');
         this.player = this.FindEntity("Player");
 
-        this.parent.RegisterEventHandler(this.TakeHit, 'hit');
+        this.parent.RegisterEventHandler(this.TriggerPickUp, 'clicked');
         this.SetupHitbox();
 
         // TODO-maybe add node to mesh containing light, otherwise delete third if

@@ -9,6 +9,7 @@ import DebugShapes from '../../DebugShapes'
 export default class PlayerControls extends Component{
     constructor(camera){
         super();
+        this.uimanager = null;
         this.name = 'PlayerControls';
         this.camera = camera;
 
@@ -39,6 +40,7 @@ export default class PlayerControls extends Component{
 
     Initialize(){
         this.physicsComponent = this.GetComponent("PlayerPhysics");
+        this.uimanager = this.FindEntity("UIManager").GetComponent("UIManager");
         this.physicsBody = this.physicsComponent.body;
         this.transform = new Ammo.btTransform();
         this.zeroVec = new Ammo.btVector3(0.0, 0.0, 0.0);
@@ -111,6 +113,25 @@ export default class PlayerControls extends Component{
     Deccelerate = (t) => {
         const frameDeccel = this.tempVec.copy(this.speed).multiplyScalar(this.decceleration * t);
         this.speed.add(frameDeccel);
+    }
+
+    HandleMenu(opening = false) {
+        let proceed = false;
+        if(!this.isLocked) {
+            if (!opening) {
+                proceed = true;
+                document.body.requestPointerLock();
+            }
+        } else {
+            if (opening) {
+                proceed = true;
+                document.exitPointerLock();
+            }
+        }
+        if (proceed) {
+            this.menuOpen = opening;
+        }
+        return proceed;
     }
 
     Update(t){
