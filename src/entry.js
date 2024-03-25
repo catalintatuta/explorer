@@ -16,7 +16,7 @@ import LevelSetup from './entities/Level/LevelSetup'
 import PlayerControls from './entities/Player/PlayerControls'
 import PlayerPhysics from './entities/Player/PlayerPhysics'
 import End from './entities/Player/End'
-import Stats from 'three/examples/jsm/libs/stats.module'
+// import Stats from 'three/examples/jsm/libs/stats.module'
 import {  FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import {  GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import Input from './Input'
@@ -81,8 +81,8 @@ class FPSGameApp{
     document.body.appendChild( this.renderer.domElement );
 
     // Stats.js
-    this.stats = new Stats();
-    document.body.appendChild(this.stats.dom);
+    // this.stats = new Stats();
+    // document.body.appendChild(this.stats.dom);
   }
 
   SetupPhysics() {
@@ -282,7 +282,7 @@ class FPSGameApp{
     this.entityManager.Update(elapsedTime);
 
     this.renderer.render(this.scene, this.camera);
-    this.stats.update();
+    // this.stats.update();
   }
 
 }
