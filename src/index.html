@@ -130,7 +130,7 @@
           border: none;
           cursor: pointer;
       }
-      #item_image {
+      .item_image {
           padding-right: 20px;
           height: 30vh;
           min-width: 15vw;
@@ -138,7 +138,7 @@
           background-repeat: no-repeat;
           background-position: center;
       }
-      #item_description {
+      .item_description {
           font-style: italic;
           background: rgb(169 220 234 / 85%);
           padding: 10px 10px 10px 0;
@@ -151,8 +151,28 @@
           display: none;
           background: rgb(24 89 107 / 50%);
       }
+      #close_inventory {
+          align-self: flex-end;
+      }
       .intro_description {
           width: 80vw;
+      }
+      #items_list {
+          background: rgb(24 89 107 / 50%);
+          font-size: 0.7em;
+          height: calc(100% - 30px);
+          overflow: scroll;
+      }
+      #items_list .item_image {
+          height: 6vh;
+          min-width: 3vw;
+      }
+      #items_list .flex_row {
+          gap: 10px;
+          margin-bottom: 10px;
+      }
+      #items_list h3 {
+          margin-top: 0;
       }
     </style>
   </head>
@@ -180,18 +200,15 @@
     </div>
     <div class="fullscreen_wrapper" id="inventory">
         <div id="inventory_box">
-            <button id="close_inventory">X</button>
-            <div class="flex_column" id="items_list"></div>
+            <div class="flex_column">
+                <button id="close_inventory" class="dialog_button">X</button>
+            </div>
+            <div class="flex_column" id="items_list">No Items</div>
         </div>
     </div>
     <div class="fullscreen_wrapper" id="dialog">
         <div id="dialog_box">
-            <div class="flex_row">
-                <div id="item_image"></div>
-                <div class="flex_column">
-                    <h3 id="item_name"></h3>
-                    <div id="item_description"></div>
-                </div>
+            <div id="dialog_item_parent">
             </div>
             <div class="flex_column center" id="pick_answer">
                 <p>Pick it up ?</p>

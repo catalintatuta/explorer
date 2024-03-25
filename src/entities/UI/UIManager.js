@@ -7,6 +7,49 @@ export default class UIManager extends Component{
         this.name = 'UIManager';
     }
 
+    RenderItem(item) {
+        let interval;
+        const {name, description, images} = item_details[item];
+
+        const flexRow = document.createElement('DIV');
+        flexRow.className = 'flex_row';
+        flexRow.id = item;
+
+        const itemName = document.createElement('H3');
+        itemName.className = 'item_name';
+        itemName.innerText = name;
+
+        const itemDescription = document.createElement('DIV');
+        itemDescription.className = 'item_description';
+        itemDescription.innerText = description;
+
+        const flexCol = document.createElement('DIV');
+        flexCol.className = 'flex_column';
+        flexCol.appendChild(itemName)
+        flexCol.appendChild(itemDescription)
+
+        const itemImage = document.createElement('DIV');
+        itemImage.className = 'item_image';
+        itemImage.style.backgroundImage = `url(${images[0]})`;
+        if (images.length > 1) {
+            let i = 1
+            interval = setInterval(() => {
+                itemImage.style.backgroundImage = `url(${images[i]})`;
+                i++;
+                if (i === images.length) {
+                  i = 0;
+                }
+            }, 1000);
+        }
+        flexRow.appendChild(itemImage);
+        flexRow.appendChild(flexCol);
+
+        return {
+          interval,
+          renderedItem: flexRow
+        };
+    }
+
     SetItemCount(itemCount, maxItems){
         if (itemCount === maxItems) {
             document.getElementById("item_counter").style.color = 'cyan';
@@ -29,41 +72,25 @@ export default class UIManager extends Component{
 
     ShowItemDialog(item, confirm, decline){
         if (item_details[item]) {
-            // TODO extract single item UI construction logic to re-use in inventory
-            let interval;
-            const {name, description, images} = item_details[item];
-            document.getElementById("item_name").innerText = name;
-            document.getElementById("item_description").innerText = description;
-            if (images.length > 1) {
-                document.getElementById("item_image").style.backgroundImage = `url(${images[0]})`;
-                let i = 1
-                interval = setInterval(() => {
-                    document.getElementById("item_image").style.backgroundImage = `url(${images[i]})`;
-                    i++;
-                    if (i === images.length) {
-                        i = 0;
-                    }
-                }, 1000);
-            } else {
-                document.getElementById("item_image").style.backgroundImage = `url(${images[0]})`;
-            }
+            const {interval, renderedItem} = this.RenderItem(item)
+            document.getElementById('dialog_item_parent').replaceChildren(renderedItem);
             document.getElementById('confirm_item').onclick = () => {
                 confirm();
-                if (images.length > 1 && interval) {
+                if (interval) {
                     clearInterval(interval)
                 }
                 this.HandleMenu('dialog', false);
             }
             document.getElementById('decline_item').onclick = () => {
                 decline();
-                if (images.length > 1 && interval) {
+                if (interval) {
                     clearInterval(interval)
                 }
                 this.HandleMenu('dialog', false);
             }
             document.getElementById('close_dialog').onclick = () => {
                 decline();
-                if (images.length > 1 && interval) {
+                if (interval) {
                     clearInterval(interval)
                 }
                 this.HandleMenu('dialog', false);
@@ -75,9 +102,21 @@ export default class UIManager extends Component{
     }
 
     ShowInventory(items, close, deleteItem){
-        document.getElementById('items_list').innerText = items.join('\n');
+        const intervals = []
+        if (items.length) {
+            const renderedItems = []
+            items.forEach(item => {
+                const {interval, renderedItem} = this.RenderItem(item)
+                renderedItems.push(renderedItem);
+                if (interval) {
+                  intervals.push(interval);
+                }
+            })
+            document.getElementById('items_list').replaceChildren(...renderedItems);
+        }
         document.getElementById('close_inventory').onclick = () => {
             close();
+            intervals.forEach(i => clearInterval(i))
             this.HandleMenu('inventory', false);
         }
         this.HandleMenu('inventory', true);
@@ -89,7 +128,6 @@ export default class UIManager extends Component{
     }
 
     LogError(message) {
-      // TODO: show this in the menu
         console.error(message);
     }
     Initialize(){
