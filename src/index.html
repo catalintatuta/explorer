@@ -5,6 +5,7 @@
     <title><%= htmlWebpackPlugin.options.title %></title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="<%=require('./fontLoad.css')%>">
     <style>
       @keyframes rotation {
         from {
@@ -13,10 +14,6 @@
         to {
           transform: rotate(359deg);
         }
-      }
-      @font-face {
-          font-family: 'Arcade Alternate';
-          src: url('src/assets/fonts/ArcadeAlternate.ttf');
       }
       body{
         margin: 0;
@@ -221,12 +218,6 @@
         <p class="intro_description">
             In "Echoes of Bytes," players delve into the digital realms of others, navigating a virtual landscape representing their storage units. The goal? Research. Decision-making becomes pivotal as players encounter diverse objects on the map, influencing in the end a dynamically generated profile that mirrors their choices. This interactive experience serves as a window into the material culture of the digital era, provoking contemplation on digital preservation, memory, and self-portrayal. Engaging with the computerized possessions of others prompts players to reconsider their own digital habits, fostering an ethnographic mindset through observation and interpretation of the behaviors embedded in the selected artifacts.
             By delving into this odyssey, players ponder the essence of digital existence and the evolving interplay between individuals and their virtual identities, all while recognizing how their decisions in curating knowledge impact the end result.
-        </p>
-        <p class="intro_description">
-            <em>
-                How might this immersive experience illuminate the intricate dance between individual identities and the rich tapestry of societal norms?
-                In sifting through files, photos, and other personal digital artifacts, what fragments of personal narratives do you envision piecing together?
-            </em>
         </p>
         <h2>Instructions</h2>
         <p class="intro_description">

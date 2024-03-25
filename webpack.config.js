@@ -21,7 +21,7 @@ module.exports = {
         exclude: path.resolve(__dirname, './node_modules/')
       },
       {
-        test: /\.(jpe?g|png|gif|svg|tga|glb|gltf|bin|fbx|babylon|mtl|pcb|pcd|prwm|obj|mat|mp3|ogg|wav)$/i,
+        test: /\.(jpe?g|png|gif|svg|tga|glb|gltf|bin|fbx|babylon|mtl|pcb|pcd|prwm|obj|mat|mp3|ogg|wav|ttf|css)$/i,
         use: {
           loader: 'file-loader',
           options: {
