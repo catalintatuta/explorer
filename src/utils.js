@@ -37,17 +37,22 @@ export function parseResults(items) {
       personal_sum += personal;
     }
   })
-  const nostalgic_ratio = nostalgic_sum / nostalgic_total;
-  const practical_ratio = practical_sum / practical_total;
-  const personal_ratio = personal_sum / personal_total;
+  const nostalgic_ratio = nostalgic_sum === 0 ? 0 : nostalgic_sum / (2 * nostalgic_total) + 0.5;
+  const practical_ratio = practical_sum === 0 ? 0 : practical_sum / (2 * practical_total) + 0.5;
+  const personal_ratio = personal_sum === 0 ? 0 : personal_sum / (2 * personal_total) + 0.5;
   console.log(nostalgic_sum, " / ", nostalgic_total);
   console.log(practical_sum, " / ", practical_total);
   console.log(personal_sum, " / ", personal_total);
 
-  const list_of_colors = [
-    addAlpha(nostalgic_color, nostalgic_ratio),
-    addAlpha(practical_color, practical_ratio),
-    addAlpha(personal_color, personal_ratio),
-  ]
-  return list_of_colors.join(',');
+  const list_of_colors = []
+  if (nostalgic_ratio) {
+    list_of_colors.push(addAlpha(nostalgic_color, nostalgic_ratio));
+  }
+  if (practical_ratio) {
+    list_of_colors.push(addAlpha(practical_color, practical_ratio));
+  }
+  if (personal_ratio) {
+    list_of_colors.push(addAlpha(personal_color, personal_ratio));
+  }
+  return list_of_colors.length ? list_of_colors.join(',') : "fff";
 }
