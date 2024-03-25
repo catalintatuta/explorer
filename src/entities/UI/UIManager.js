@@ -122,9 +122,16 @@ export default class UIManager extends Component{
         this.HandleMenu('inventory', true);
     }
 
+    ShowEndGame(items){
+        console.log(items);
+        document.getElementById("game_hud").style.visibility = 'hidden';
+        this.HandleMenu('endgame', true);
+    }
+
     HandleMenu(menuId, opening) {
         document.getElementById('crosshair').style.visibility = opening ? 'hidden' : 'visible';
         document.getElementById(menuId).style.visibility = opening ? 'visible' : 'hidden';
+        document.getElementById(menuId).style.opacity = opening ? 1 : 0;
     }
 
     LogError(message) {

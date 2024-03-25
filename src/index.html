@@ -40,7 +40,7 @@
       #game_hud{
         visibility: hidden;
       }
-      #menu{
+      #menu,#endgame,#intro{
         position: absolute;
         width: 100%;
         height: 100%;
@@ -53,17 +53,11 @@
         visibility: hidden;
       }
       #intro{
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background-color: black;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        visibility: hidden;
         overflow: scroll;
+      }
+      #endgame{
+          opacity: 0;
+          transition: opacity 3s;
       }
       h1{
         font-family: 'Arcade Alternate';
@@ -197,6 +191,10 @@
         <h2>Instructions</h2>
         <p class="intro_description">Use <strong>WASD</strong> and the <strong>cursor</strong> to move<br/> <strong>Click</strong> on items to pick them up<br/> Press <strong>I</strong> to open the inventory</p>
         <button id="start_game" class="main_menu_button">start</button>
+    </div>
+    <div id="endgame">
+        <h1>The End</h1>
+        <button id="retry" class="main_menu_button">try again?</button>
     </div>
     <div class="fullscreen_wrapper" id="inventory">
         <div id="inventory_box">

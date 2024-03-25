@@ -35,11 +35,13 @@ export default class PlayerControls extends Component{
         this.xAxis = new THREE.Vector3(1.0, 0.0, 0.0);
         this.yAxis = new THREE.Vector3(0.0, 1.0, 0.0);
 
-        this.menuOpen = false
+        this.menuOpen = false;
+        this.update = true;
     }
 
     Initialize(){
         this.physicsComponent = this.GetComponent("PlayerPhysics");
+        this.endChecker = this.GetComponent("End");
         this.uimanager = this.FindEntity("UIManager").GetComponent("UIManager");
         this.physicsBody = this.physicsComponent.body;
         this.transform = new Ammo.btTransform();
@@ -143,7 +145,23 @@ export default class PlayerControls extends Component{
         return proceed;
     }
 
+    EndGame() {
+        this.update = false
+        Input.ClearEventListners();
+        const proceed = this.HandleMenu(true);
+        const {inventory} = this.parent.GetComponent('Inventory')
+        if (proceed) {
+            this.uimanager.ShowEndGame(inventory);
+        }
+    }
+
     Update(t){
+        if (!this.update) {
+            return;
+        }
+        if (this.endChecker.inEndZone) {
+            this.EndGame();
+        }
         const forwardFactor = Input.GetKeyDown("KeyS") - Input.GetKeyDown("KeyW");
         const rightFactor = Input.GetKeyDown("KeyD") - Input.GetKeyDown("KeyA");
         const direction = this.moveDir.set(rightFactor, 0.0, forwardFactor).normalize();

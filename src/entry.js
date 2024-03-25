@@ -15,6 +15,7 @@ import Sky from './entities/Sky/Sky2'
 import LevelSetup from './entities/Level/LevelSetup'
 import PlayerControls from './entities/Player/PlayerControls'
 import PlayerPhysics from './entities/Player/PlayerPhysics'
+import End from './entities/Player/End'
 import Stats from 'three/examples/jsm/libs/stats.module'
 import {  FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import {  GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
@@ -131,6 +132,7 @@ class FPSGameApp{
   SetupMainMenus(){
     document.getElementById('show_intro').addEventListener('click', this.ShowIntro);
     document.getElementById('start_game').addEventListener('click', this.StartGame);
+    document.getElementById('endgame').addEventListener('click', ()=>window.location.reload());
   }
 
   ShowMenu = (visible=true) => {
@@ -186,9 +188,8 @@ class FPSGameApp{
     playerEntity.SetName("Player");
     playerEntity.AddComponent(new PlayerPhysics(this.physicsWorld, Ammo));
     playerEntity.AddComponent(new PlayerControls(this.camera, this.scene));
-    playerEntity.AddComponent(new Inventory(this.camera, this.physicsWorld,
-      // this.assets['ak47Shot'], this.listener
-    ));
+    playerEntity.AddComponent(new Inventory(this.camera, this.physicsWorld));
+    playerEntity.AddComponent(new End(this.physicsWorld, new THREE.Vector3(66, 0, 52.5)));
     playerEntity.SetPosition(new THREE.Vector3(2.14, 1.48, -1.36));
     playerEntity.SetRotation(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0), -Math.PI * 0.5));
     this.entityManager.Add(playerEntity);
