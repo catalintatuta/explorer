@@ -15,3 +15,7 @@ export function shuffle(array) {
 
   return array;
 }
+
+export function parseResults(items) {
+
+}
