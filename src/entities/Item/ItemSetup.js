@@ -66,6 +66,8 @@ export default class ItemSetup extends Component{
           const {inventory, maxItems} = this.player.GetComponent('Inventory')
           if (inventory.length >= maxItems) {
             this.uimanager.SetInventoryFull(true);
+          } else {
+            this.uimanager.SetInventoryFull(false);
           }
           this.uimanager.ShowItemDialog(
             this.parent.name,

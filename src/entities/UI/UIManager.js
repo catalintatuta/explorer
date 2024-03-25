@@ -55,8 +55,10 @@ export default class UIManager extends Component{
     }
 
     SetItemCount(itemCount, maxItems){
-        if (itemCount === maxItems) {
+        if (itemCount >= maxItems) {
             document.getElementById("item_counter").style.color = 'cyan';
+        } else {
+            document.getElementById("item_counter").style.color = 'white';
         }
         document.getElementById("item_count").innerText = itemCount;
         if (maxItems) {

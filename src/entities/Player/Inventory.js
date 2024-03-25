@@ -34,6 +34,7 @@ export default class Inventory extends Component{
         }
 
         this.inventory.splice(itemIndex,1);
+        this.uimanager.SetInventoryFull(false);
         this.uimanager.SetItemCount(this.inventory.length, this.maxItems);
     }
 
