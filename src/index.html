@@ -124,6 +124,7 @@
           background: rgb(43 147 176 / 54%);
           box-shadow: 0px 0px 89px 65px rgb(38 38 38 / 36%);
           user-select: none;
+          /*position: relative;*/
       }
       .dialog_button {
           background-color: rgba(0,0,0,0);
@@ -131,6 +132,14 @@
           font-size: 1.5em;
           border: none;
           cursor: pointer;
+      }
+      .delete_button {
+          background-color: #27292b94;
+          color: rgb(221, 221, 221);
+          font-size: 1.5em;
+          border: none;
+          cursor: pointer;
+          align-self: flex-end;
       }
       .item_image {
           padding-right: 20px;
@@ -148,6 +157,14 @@
       }
       #pick_answer {
           background: rgb(24 89 107 / 50%);
+      }
+      #delete_item_answer {
+          visibility: hidden;
+          top: 0;
+          left: 0;
+      }
+      #delete_item_answer > div {
+          background: #333;
       }
       #full_inventory {
           display: none;
@@ -226,10 +243,18 @@
     <div class="fullscreen_wrapper" id="inventory">
         <div id="inventory_box">
             <div class="flex_column">
-                <button id="close_inventory" class="dialog_button">X</button>
+                <button id="close_inventory" class="dialog_button">✖</button>
+            </div>
+            <div class="fullscreen_wrapper" id="delete_item_answer">
+                <div class="flex_column center" >
+                    <p>Deleting is permanent. Are you sure?</p>
+                    <div class="flex_row">
+                        <button class="dialog_button" id="confirm_delete">yes</button>
+                        <button class="dialog_button" id="decline_delete">no</button>
+                    </div>
+                </div>
             </div>
             <div class="flex_column" id="items_list">
-                <h3>No Items</h3>
             </div>
         </div>
     </div>

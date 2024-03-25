@@ -105,13 +105,45 @@ export default class UIManager extends Component{
         }
     }
 
+    ConfirmDelete(onConfirm) {
+      document.getElementById('confirm_delete').onclick = () => {
+        onConfirm();
+        document.getElementById('delete_item_answer').style.visibility = 'hidden';
+      }
+      document.getElementById('decline_delete').onclick = () => {
+        document.getElementById('delete_item_answer').style.visibility = 'hidden';
+      }
+      document.getElementById('delete_item_answer').style.visibility = 'visible';
+
+    }
+
     ShowInventory(items, close, deleteItem){
         const intervals = []
         if (items.length) {
             const renderedItems = []
             items.forEach(item => {
                 const {interval, renderedItem} = this.RenderItem(item)
-                renderedItems.push(renderedItem);
+
+                const flexCol = document.createElement('DIV');
+
+                const deleteItemButton = document.createElement('BUTTON');
+                deleteItemButton.id=`delete_${item}_button`;
+                deleteItemButton.className='delete_button';
+                deleteItemButton.innerText='🗑️ delete';
+                deleteItemButton.onclick = () => {
+                  this.ConfirmDelete(
+                    () => {
+                      deleteItem(item);
+                      flexCol.remove();
+                    }
+                  )
+                }
+
+                flexCol.className = 'flex_column';
+                flexCol.appendChild(renderedItem);
+                flexCol.appendChild(deleteItemButton);
+
+                renderedItems.push(flexCol);
                 if (interval) {
                   intervals.push(interval);
                 }

@@ -27,6 +27,16 @@ export default class Inventory extends Component{
         this.uimanager.SetItemCount(this.inventory.length, this.maxItems);
     }
 
+    DeleteItem = (e) => {
+        const itemIndex = this.inventory.findIndex(item => item === e.item);
+        if (itemIndex === -1) {
+          return;
+        }
+
+        this.inventory.splice(itemIndex,1);
+        this.uimanager.SetItemCount(this.inventory.length, this.maxItems);
+    }
+
     Initialize(){
 
         this.uimanager = this.FindEntity("UIManager").GetComponent("UIManager");
@@ -35,6 +45,7 @@ export default class Inventory extends Component{
         this.SetupInput();
         //Listen to item pickup event
         this.parent.RegisterEventHandler(this.ItemPickup, "ItemPickup");
+        this.parent.RegisterEventHandler(this.DeleteItem, "DeleteItem");
     }
 
     SetupInput(){
