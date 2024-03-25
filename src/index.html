@@ -6,6 +6,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <style>
+      @keyframes rotation {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(359deg);
+        }
+      }
       @font-face {
           font-family: 'Arcade Alternate';
           src: url('src/assets/fonts/ArcadeAlternate.ttf');
@@ -170,6 +178,9 @@
       }
       #boring_avatar {
           border: 0;
+          background: white;
+          border-radius: 50%;
+          animation: rotation 10s infinite linear;
       }
       #endgame_list {
           max-height: 25vh;

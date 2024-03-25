@@ -1,5 +1,6 @@
 import Component from '../../Component'
 import {item_details} from "../../items_info";
+import {parseResults} from "../../utils";
 
 export default class UIManager extends Component{
     constructor(){
@@ -135,7 +136,7 @@ export default class UIManager extends Component{
           })
           document.getElementById("endgame_list").replaceChildren(...renderedItems);
         }
-        document.getElementById("boring_avatar").src = "https://source.boringavatars.com/marble/80?colors=ff8e42,922b4a,2b9278"
+        document.getElementById("boring_avatar").src = `https://source.boringavatars.com/marble/80?colors=${parseResults(items)}`
         this.HandleMenu('endgame', true);
     }
 

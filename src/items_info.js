@@ -229,7 +229,7 @@ export const item_models = [
   }
 ]
 
-const itemProps = {
+export const item_props = {
   'id_scan': {
     nostalgic: 0,
     practical: 1,
@@ -296,8 +296,8 @@ const itemProps = {
     personal: 0.4,
   },
   'old_pngs': {
-    nostalgic: 0.4,
-    practical: 0,
+    nostalgic: 0.3,
+    practical: 0.1,
     personal: 0.6,
   },
   'warcraft': {
@@ -332,6 +332,6 @@ const itemProps = {
   }
 }
 
-// nostalgic sum: 9.6
-// practical sum: 3.7
-// personal sum: 6.7
+export const nostalgic_total = 9.5;
+export const practical_total = 3.8;
+export const personal_total = 6.7;
