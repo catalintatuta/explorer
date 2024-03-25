@@ -42,6 +42,6 @@ module.exports = {
     }
   },
   plugins: [
-    new HtmlWebpackPlugin({'title': 'Three.js FPS Demo | Venolabs', template: './src/index.html'})
+    new HtmlWebpackPlugin({'title': 'Echoes Of Bytes', template: './src/index.html'})
   ]
 }
