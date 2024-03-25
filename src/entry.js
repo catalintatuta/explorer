@@ -132,7 +132,7 @@ class FPSGameApp{
   SetupMainMenus(){
     document.getElementById('show_intro').addEventListener('click', this.ShowIntro);
     document.getElementById('start_game').addEventListener('click', this.StartGame);
-    document.getElementById('endgame').addEventListener('click', ()=>window.location.reload());
+    document.getElementById('retry').addEventListener('click', ()=>window.location.reload());
   }
 
   ShowMenu = (visible=true) => {

@@ -5,7 +5,6 @@
     <title><%= htmlWebpackPlugin.options.title %></title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-<!--    <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39+Text&family=Roboto:wght@400;700&display=swap" rel="stylesheet">-->
     <style>
       @font-face {
           font-family: 'Arcade Alternate';
@@ -51,6 +50,7 @@
         justify-content: center;
         flex-direction: column;
         visibility: hidden;
+        user-select: none;
       }
       #intro{
         overflow: scroll;
@@ -69,7 +69,7 @@
           font-size: 1.5em;
           border: none;
           cursor: pointer;
-          margin-top: 10%;
+          margin-top: 3em;
           font-weight: 700;
       }
       #debug{
@@ -168,6 +168,17 @@
       #items_list h3 {
           margin-top: 0;
       }
+      #boring_avatar {
+          border: 0;
+      }
+      #endgame_list {
+          max-height: 25vh;
+          width: 50vw;
+          padding: 0 20px;
+          border-radius: 10px;
+          background: #333;
+          overflow: scroll;
+      }
     </style>
   </head>
 
@@ -194,6 +205,11 @@
     </div>
     <div id="endgame">
         <h1>The End</h1>
+        <iframe id="boring_avatar" width="80" height="80"></iframe>
+        <h2>You collected:</h2>
+        <div class="flex_column" id="endgame_list">
+            <h3>No Items</h3>
+        </div>
         <button id="retry" class="main_menu_button">try again?</button>
     </div>
     <div class="fullscreen_wrapper" id="inventory">
@@ -201,7 +217,9 @@
             <div class="flex_column">
                 <button id="close_inventory" class="dialog_button">X</button>
             </div>
-            <div class="flex_column" id="items_list">No Items</div>
+            <div class="flex_column" id="items_list">
+                <h3>No Items</h3>
+            </div>
         </div>
     </div>
     <div class="fullscreen_wrapper" id="dialog">

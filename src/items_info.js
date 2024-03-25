@@ -231,107 +231,107 @@ export const item_models = [
 
 const itemProps = {
   'id_scan': {
-    melancholy: 0,
-    practicality: 1,
+    nostalgic: 0,
+    practical: 1,
     personal: 0,
   },
   'video_diaries': {
-    melancholy: 0.5,
-    practicality: 0,
+    nostalgic: 0.5,
+    practical: 0,
     personal: 0.5,
   },
   'downloaded_books': {
-    melancholy: 0,
-    practicality: 0.8,
+    nostalgic: 0,
+    practical: 0.8,
     personal: 0.2,
   },
   'plane_ticket': {
-    melancholy: 0.8,
-    practicality: 0,
+    nostalgic: 0.8,
+    practical: 0,
     personal: 0.2,
   },
   'photos_18th_birthday': {
-    melancholy: 0.5,
-    practicality: 0,
+    nostalgic: 0.5,
+    practical: 0,
     personal: 0.5,
   },
   'horror_photos': {
-    melancholy: 0.6,
-    practicality: 0.1,
+    nostalgic: 0.6,
+    practical: 0.1,
     personal: 0.3,
   },
   'concert_tickets': {
-    melancholy: 0.7,
-    practicality: 0,
+    nostalgic: 0.7,
+    practical: 0,
     personal: 0.3,
   },
   'cambridge': {
-    melancholy: 0.3,
-    practicality: 0.4,
+    nostalgic: 0.3,
+    practical: 0.4,
     personal: 0.3,
   },
   'photoshop': {
-    melancholy: 0,
-    practicality: 1,
+    nostalgic: 0,
+    practical: 1,
     personal: 0,
   },
   'music': {
-    melancholy: 0,
-    practicality: 0,
+    nostalgic: 0,
+    practical: 0,
     personal: 1,
   },
   'cursed_meme': {
-    melancholy: 0.3,
-    practicality: 0,
+    nostalgic: 0.3,
+    practical: 0,
     personal: 0.7,
   },
   'rome_photos': {
-    melancholy: 1,
-    practicality: 0,
+    nostalgic: 1,
+    practical: 0,
     personal: 0,
   },
   'downloaded_movies': {
-    melancholy: 0.4,
-    practicality: 0.2,
+    nostalgic: 0.4,
+    practical: 0.2,
     personal: 0.4,
   },
   'old_pngs': {
-    melancholy: 0.4,
-    practicality: 0,
+    nostalgic: 0.4,
+    practical: 0,
     personal: 0.6,
   },
   'warcraft': {
-    melancholy: 0.7,
-    practicality: 0,
+    nostalgic: 0.7,
+    practical: 0,
     personal: 0.3,
   },
   'photos_ex': {
-    melancholy: 0.6,
-    practicality: 0,
+    nostalgic: 0.6,
+    practical: 0,
     personal: 0.4,
   },
   'conversation': {
-    melancholy: 0.8,
-    practicality: 0,
+    nostalgic: 0.8,
+    practical: 0,
     personal: 0.2,
   },
   'photos_doggos': {
-    melancholy: 0.5,
-    practicality: 0,
+    nostalgic: 0.5,
+    practical: 0,
     personal: 0.5,
   },
   'thesis': {
-    melancholy: 0.6,
-    practicality: 0.2,
+    nostalgic: 0.6,
+    practical: 0.2,
     personal: 0.2,
   },
   'vans_receipt': {
-    melancholy: 0.9,
-    practicality: 0,
+    nostalgic: 0.9,
+    practical: 0,
     personal: 0.1,
   }
 }
 
-// melancholy sum: 9.6
-// practicality sum: 3.7
+// nostalgic sum: 9.6
+// practical sum: 3.7
 // personal sum: 6.7

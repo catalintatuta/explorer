@@ -7,7 +7,7 @@ export default class UIManager extends Component{
         this.name = 'UIManager';
     }
 
-    RenderItem(item) {
+    RenderItem(item, light) {
         let interval;
         const {name, description, images} = item_details[item];
 
@@ -26,6 +26,9 @@ export default class UIManager extends Component{
         const flexCol = document.createElement('DIV');
         flexCol.className = 'flex_column';
         flexCol.appendChild(itemName)
+        if (light) {
+            return {renderedItem: flexCol}
+        }
         flexCol.appendChild(itemDescription)
 
         const itemImage = document.createElement('DIV');
@@ -123,8 +126,16 @@ export default class UIManager extends Component{
     }
 
     ShowEndGame(items){
-        console.log(items);
         document.getElementById("game_hud").style.visibility = 'hidden';
+        if (items.length) {
+          const renderedItems = []
+          items.forEach(item => {
+            const {renderedItem} = this.RenderItem(item, true)
+            renderedItems.push(renderedItem);
+          })
+          document.getElementById("endgame_list").replaceChildren(...renderedItems);
+        }
+        document.getElementById("boring_avatar").src = "https://source.boringavatars.com/marble/80?colors=ff8e42,922b4a,2b9278"
         this.HandleMenu('endgame', true);
     }
 
